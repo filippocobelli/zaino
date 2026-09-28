@@ -10,6 +10,8 @@ It runs on the [ZECTRIX NOTE4C Devkit](https://zectrix.com/en/note4c.html), a 4.
 
 *Zaino* is Italian for "backpack".
 
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Buy%20me%20a%20coffee-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/filippocobelli)
+
 ## What it does
 
 ![The daily schedule: Today in the morning, Week in the afternoon, Backpack in the evening, Lunch with the button](docs/screenshots/en/daily-schedule.png)
