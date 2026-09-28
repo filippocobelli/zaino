@@ -1,0 +1,16 @@
+services:
+  zaino:
+    build: .
+    container_name: zaino
+    restart: unless-stopped
+    ports:
+      - "3021:3021"
+    environment:
+      - TZ=Europe/Rome
+      # lingua di una nuova installazione (it, en…); poi si cambia dalla web app
+      # - ZAINO_LANG=en
+    volumes:
+      - ./data:/data
+    # Docker su Proxmox: se il log mostra "PermissionError ... socketpair", togli il commento:
+    # security_opt:
+    #   - apparmor=unconfined

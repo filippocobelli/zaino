@@ -1,0 +1,250 @@
+{
+  "_name": "Italiano",
+  "_locale": "it-IT",
+  "_translators": "",
+
+  "display": {
+    "days": ["lunedì", "martedì", "mercoledì", "giovedì", "venerdì", "sabato", "domenica"],
+    "days_abbr": ["LUN", "MAR", "MER", "GIO", "VEN", "SAB", "DOM"],
+    "months_abbr": ["GEN", "FEB", "MAR", "APR", "MAG", "GIU", "LUG", "AGO", "SET", "OTT", "NOV", "DIC"],
+    "week_letters": "LMMGVSD",
+    "today": "oggi",
+    "tomorrow": "domani",
+    "other_day": "{weekday} {day}",
+    "updated": "agg. {time}",
+    "battery_low": "Batteria {pct}%",
+    "no_school_ahead": "Nessun giorno di scuola in vista",
+
+    "sidebar_minmax": "max {max}°  min {min}°",
+    "sidebar_week": "Settimana {n}",
+
+    "home_title": "OGGI, {day} {month}",
+    "home_school": "Scuola {entry}–{exit}",
+    "home_lunch": "Pranzo ",
+    "home_holiday": "Vacanza!",
+    "home_nothing": "Niente in programma",
+    "home_tomorrow": "DOMANI",
+    "home_in_days": "TRA {n} GIORNI",
+    "home_next": "{when}, {day} {month}",
+
+    "note_types": {"compito": "Compiti", "verifica": "Verifica", "avviso": "Avviso", "gita": "Gita"},
+    "note_with_subject": "{type} di {subject_lower}",
+    "note_line": "{label}: {text}",
+
+    "zaino_title": "ZAINO",
+    "zaino_for": "per {when}",
+    "zaino_for_near": "per {when}, {weekday}",
+    "zaino_also": "Anche: ",
+    "zaino_rain": ["PIOGGIA: ", "OMBRELLO O IMPERMEABILE!"],
+    "zaino_snow": ["NEVE: ", "STIVALI E GUANTI!"],
+
+    "meteo_title": "METEO",
+    "meteo_unavailable": "Meteo non disponibile",
+    "meteo_set_location": "Imposta la località nella web app",
+    "meteo_max": "MAX",
+    "meteo_min": "MIN",
+    "meteo_max_val": "MAX {v}°",
+    "meteo_min_val": "MIN {v}°",
+
+    "week_holiday": "Vacanza",
+    "week_today": "Oggi",
+    "week_tomorrow": "Domani",
+
+    "riposo_upload": "Carica un'immagine dalla web app",
+
+    "mensa_title": "MENSA",
+    "mensa_setup": "Imposta il menù nella web app",
+    "mensa_week": "{title} · settimana {i} di {n}",
+    "mensa_default_title": "Menù",
+    "mensa_head_near": "{when}, {weekday} {day}",
+    "mensa_none": "Niente mensa",
+
+    "tips": {
+      "rain": ["Ombrello o impermeabile ", "{when}"],
+      "snow": ["Neve ", "{when}: stivali e guanti"],
+      "cold": ["Giacca pesante ", "oggi"],
+      "hot": ["Borraccia piena ", "oggi"]
+    },
+
+    "weather": {
+      "sereno": "Sereno", "poco_nuvoloso": "Poco nuvoloso", "parz_nuvoloso": "Parz. nuvoloso",
+      "nuvoloso": "Nuvoloso", "nebbia": "Nebbia", "pioviggine": "Pioviggine",
+      "pioggia_gelata": "Pioggia gelata", "pioggia_debole": "Pioggia debole", "pioggia": "Pioggia",
+      "pioggia_forte": "Pioggia forte", "neve_debole": "Neve debole", "neve": "Neve",
+      "neve_forte": "Neve forte", "nevischio": "Nevischio", "rovesci": "Rovesci",
+      "rovesci_forti": "Rovesci forti", "temporale": "Temporale", "sconosciuto": "—"
+    },
+
+    "colors": {
+      "rosso": "rosso", "arancione": "arancione", "giallo": "giallo", "verde": "verde",
+      "verde chiaro": "verde chiaro", "azzurro": "azzurro", "blu": "blu", "blu scuro": "blu scuro",
+      "viola": "viola", "lilla": "lilla", "rosa": "rosa", "marrone": "marrone",
+      "grigio": "grigio", "nero": "nero", "bianco": "bianco"
+    }
+  },
+
+  "demo": {
+    "events": ["Nuoto", "Merenda dai nonni", "Festa di compleanno di Marta", "Partita di minibasket"]
+  },
+
+  "server": {
+    "unknown_section": "Sezione sconosciuta",
+    "search_unavailable": "Ricerca non disponibile: {error}",
+    "image_unreadable": "Immagine non leggibile: {error}",
+    "image_not_found": "Immagine non trovata",
+    "image_default_name": "Immagine"
+  },
+
+  "seed": {
+    "class_name": "1ª",
+    "menu_title": "Menù",
+    "subjects": [
+      ["Italiano", ["Libro di lettura", "Quaderno a righe"]],
+      ["Matematica", ["Sussidiario matematica", "Quaderno a quadretti"]],
+      ["Inglese", ["Libro di inglese"]],
+      ["Storia", ["Quaderno di storia"]],
+      ["Geografia", ["Quaderno di geografia"]],
+      ["Scienze", ["Quaderno di scienze"]],
+      ["Arte", ["Album da disegno", "Pastelli"]],
+      ["Musica", ["Flauto"]],
+      ["Motoria", ["Tuta", "Scarpe da ginnastica"]],
+      ["Religione", ["Quaderno di religione"]]
+    ]
+  },
+
+  "web": {
+    "app_title": "Zaino — pannello",
+    "title": "Zaino",
+    "title_child": "Zaino di {name}",
+    "subtitle": "Pannello del display",
+    "subtitle_class": "Classe {cls} · pannello del display",
+    "error": "Errore: {msg}",
+    "none_option": "—",
+    "choose": "Scegli…",
+
+    "nav": {"anteprima": "Schermo", "orario": "Orario", "materie": "Materie", "diario": "Diario", "mensa": "Mensa",
+            "calendari": "Calendari", "riposo": "Immagini", "impostazioni": "Impostazioni"},
+    "pages": {"auto": "Adesso", "home": "Oggi", "zaino": "Zaino", "mensa": "Mensa", "meteo": "Meteo",
+              "settimana": "Settimana", "riposo": "Riposo"},
+    "days": ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato"],
+
+    "preview": {
+      "setup_hint": "<strong>Primo passo:</strong> imposta la località del meteo in <em>Impostazioni</em>, poi orario e materie.",
+      "screen_alt": "Anteprima dello schermo e-paper",
+      "device_state": "Ultimo contatto {when} · pagina {page} · batteria {pct}%",
+      "device_never": "Il device non si è ancora collegato."
+    },
+
+    "orario": {
+      "title": "Orario settimanale",
+      "entry": "Entrata", "exit": "Uscita", "hours": "Ore",
+      "hour_aria": "Ora {n}", "remove_hour": "Togli ora {n}", "add_hour": "Aggiungi ora",
+      "extras": "Da portare sempre questo giorno (uno per riga)",
+      "save": "Salva orario", "saved": "Orario salvato"
+    },
+
+    "materie": {
+      "title": "Materie",
+      "intro": "Scegli il colore usato dalla maestra: lo stile sullo schermo viene proposto in automatico e puoi cambiarlo.",
+      "real_color": "Colore reale", "name": "Nome materia", "short": "Sigla", "delete": "Elimina {name}",
+      "on_screen": "Sullo schermo", "style": "Stile sullo schermo",
+      "color_name": "Nome del colore (compare sul display quando lo stile è a righe o puntini)",
+      "color_name_ph": "es. blu", "color_name_aria": "Nome del colore",
+      "in_zaino": "Compare nello zaino (togli la spunta per Mensa)",
+      "materials": "Materiale da portare (uno per riga)",
+      "new": "Nuova materia",
+      "confirm_delete": "Eliminare {name}? Verrà tolta anche dall'orario.",
+      "add": "Aggiungi materia", "save": "Salva materie", "saved": "Materie salvate"
+    },
+
+    "diario": {
+      "title": "Diario", "new": "Nuova voce", "type": "Tipo", "subject": "Materia", "no_subject": "Nessuna",
+      "date": "Giorno", "end_date": "Fino a (per più giorni)",
+      "text": "Descrizione", "text_ph": "es. scheda pagina 12",
+      "bring": "Da mettere nello zaino, separati da virgola", "bring_ph": "es. autorizzazione firmata, merenda",
+      "add": "Aggiungi al diario", "upcoming": "In arrivo", "show_past": "mostra passate",
+      "types": {"compito": "Compiti", "verifica": "Verifica", "avviso": "Avviso", "gita": "Gita", "vacanza": "Vacanza"},
+      "type_vacanza_option": "Vacanza (niente scuola)",
+      "bring_line": "Zaino: {items}",
+      "delete": "Elimina voce",
+      "empty": "Nessuna voce in arrivo. Aggiungi compiti, verifiche o vacanze qui sopra.",
+      "need_date": "Scegli il giorno", "added": "Aggiunto al diario", "deleted": "Voce eliminata"
+    },
+
+    "mensa": {
+      "title": "Mensa",
+      "intro": "Il menù a rotazione della scuola: una scheda per settimana, un piatto per riga. Il pranzo del giorno compare anche nella pagina di oggi.",
+      "enabled": "Mostra il pranzo nella pagina di oggi",
+      "pages_hint": "La pagina Mensa si attiva e si ordina in Impostazioni → Pagine del display.",
+      "name": "Nome del menù", "name_ph": "es. Menù estivo",
+      "current": "Questa settimana è la", "week_option": "{n}ª settimana", "choose": "— scegli —",
+      "info": "Rotazione di {n} settimane, la 1ª è iniziata lunedì {date}.",
+      "info_missing": "Indica quale settimana del menù è quella in corso.",
+      "week_title": "{n}ª settimana", "in_progress": " · in corso",
+      "days": ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"],
+      "add_week": "Aggiungi settimana", "remove_week": "Togli l'ultima", "confirm_remove": "Togliere l'ultima settimana?",
+      "save": "Salva menù", "saved": "Menù salvato"
+    },
+
+    "calendari": {
+      "title": "Calendari iCal",
+      "intro": "Link pubblici .ics o webcal:// (sport, attività). Gli eventi compaiono nella schermata principale.",
+      "active": "attivo", "name_ph": "Nome (es. Sport)", "name_aria": "Nome calendario", "delete": "Elimina calendario",
+      "url": "Link iCal",
+      "empty": "Nessun calendario. Aggiungi il link iCal del calendario sport.",
+      "add": "Aggiungi calendario", "test": "Prova", "save": "Salva calendari", "saved": "Calendari salvati",
+      "test_title": "Prossimi 7 giorni", "test_empty": "Nessun evento trovato. Hai salvato prima di provare?"
+    },
+
+    "riposo": {
+      "title": "Immagini a riposo",
+      "intro": "Mostrate di notte (e, se vuoi, nei giorni senza scuola). Vengono convertite a 4 colori con dithering.",
+      "new": "Nuova immagine", "fit": "Adattamento",
+      "fit_cover": "Riempi lo schermo (ritaglia)", "fit_contain": "Intera (bordi bianchi)",
+      "upload": "Carica immagine", "which": "Quale mostrare",
+      "mode_manual": "Sempre quella scelta", "mode_daily": "Una diversa ogni giorno",
+      "on_screen": "Sullo schermo", "show_this": "Mostra questa", "delete": "Elimina", "delete_aria": "Elimina {name}",
+      "empty": "Nessuna immagine caricata.",
+      "need_file": "Scegli un'immagine", "uploaded": "Immagine caricata", "chosen": "Immagine scelta",
+      "confirm_delete": "Eliminare questa immagine?", "deleted": "Immagine eliminata"
+    },
+
+    "impostazioni": {
+      "title": "Impostazioni",
+      "child": "Nome del bambino", "class": "Classe",
+      "city": "Località meteo", "city_ph": "es. Bologna", "search": "Cerca", "results": "Risultati ricerca",
+      "lat": "Latitudine", "lon": "Longitudine",
+      "city_needed": "Scrivi il nome della località", "city_none": "Nessuna località trovata",
+      "city_set": "Località impostata: ricordati di salvare",
+      "lang_title": "Lingua", "lang_intro": "Lingua del display e della web app.", "lang_saved": "Lingua salvata",
+      "color_title": "Colore del display",
+      "color_intro": "Con più figli, un colore diverso per ciascuno: si riconosce a colpo d'occhio di chi è il display. Cambia anche il colore di questa web app.",
+      "color_saved": "Colore salvato",
+      "wake_title": "Risvegli del device", "wake": "Orari di aggiornamento, separati da virgola",
+      "night_from": "Notte da", "night_to": "Notte fino a",
+      "riposo_night": "Immagine a riposo di notte", "riposo_no_school": "Immagine a riposo nei giorni senza scuola",
+      "pages_title": "Pagine del display",
+      "pages_intro": "Attiva le pagine che vuoi e mettile nell'ordine in cui il tasto frontale le fa scorrere.",
+      "move_up": "Sposta su {page}", "move_down": "Sposta giù {page}",
+      "hold": "Tempo di visione dopo un tasto (minuti)",
+      "sched_title": "Programma della giornata",
+      "sched_intro": "Quale pagina mostrare in ogni fascia oraria. Vale la prima fascia che corrisponde; la notte e l'immagine a riposo hanno la precedenza.",
+      "from": "Dalle", "to": "Alle", "page": "Pagina", "when": "Quando", "remove_slot": "Togli fascia",
+      "when_options": {"scuola": "giorni di scuola", "vigilia": "la sera prima di scuola", "no_scuola": "giorni senza scuola", "sempre": "sempre"},
+      "sched_empty": "Nessuna fascia: il display mostra sempre la pagina scelta qui sotto.",
+      "add_slot": "Aggiungi fascia", "default_page": "Negli altri momenti",
+      "week_events": "Nella pagina Settimana mostra anche gli appuntamenti in basso",
+      "color_labels": "Scrivi il nome del colore accanto alle materie rese con righe o puntini (es. \"blu\")",
+      "save": "Salva impostazioni", "saved": "Impostazioni salvate"
+    },
+
+    "themes": {"rosso": "Rosso", "nero": "Nero", "giallo": "Giallo"},
+    "styles": {
+      "rosso": "Rosso", "giallo": "Giallo", "nero": "Nero",
+      "arancione": "Arancione (R+G)", "rosa": "Rosa (R+B)", "giallo_chiaro": "Giallo chiaro (G+B)",
+      "grigio": "Grigio (N+B)", "bordeaux": "Bordeaux (R+N)", "oliva": "Oliva (G+N)",
+      "righe_nere": "Righe nere (per blu)", "puntini_neri": "Puntini neri (per verde)",
+      "righe_rosse": "Righe rosse (per viola)", "nessuno": "Nessun colore"
+    }
+  }
+}

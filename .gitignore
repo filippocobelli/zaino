@@ -1,0 +1,15 @@
+# server
+server/data/
+__pycache__/
+*.pyc
+.venv/
+# firmware
+firmware/build/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/sdkconfig.url
+firmware/managed_components/
+firmware/dependencies.lock
+*.bin
+# sistema
+.DS_Store

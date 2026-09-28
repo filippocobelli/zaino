@@ -1,0 +1,250 @@
+{
+  "_name": "English",
+  "_locale": "en-GB",
+  "_translators": "",
+
+  "display": {
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "days_abbr": ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"],
+    "months_abbr": ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"],
+    "week_letters": "MTWTFSS",
+    "today": "today",
+    "tomorrow": "tomorrow",
+    "other_day": "{weekday} {day}",
+    "updated": "upd. {time}",
+    "battery_low": "Battery {pct}%",
+    "no_school_ahead": "No school days coming up",
+
+    "sidebar_minmax": "max {max}°  min {min}°",
+    "sidebar_week": "Week {n}",
+
+    "home_title": "TODAY, {day} {month}",
+    "home_school": "School {entry}–{exit}",
+    "home_lunch": "Lunch ",
+    "home_holiday": "Holiday!",
+    "home_nothing": "Nothing planned",
+    "home_tomorrow": "TOMORROW",
+    "home_in_days": "IN {n} DAYS",
+    "home_next": "{when}, {day} {month}",
+
+    "note_types": {"compito": "Homework", "verifica": "Test", "avviso": "Notice", "gita": "Trip"},
+    "note_with_subject": "{subject} {type_lower}",
+    "note_line": "{label}: {text}",
+
+    "zaino_title": "BACKPACK",
+    "zaino_for": "for {when}",
+    "zaino_for_near": "for {when}, {weekday}",
+    "zaino_also": "Also: ",
+    "zaino_rain": ["RAIN: ", "UMBRELLA OR RAINCOAT!"],
+    "zaino_snow": ["SNOW: ", "BOOTS AND GLOVES!"],
+
+    "meteo_title": "WEATHER",
+    "meteo_unavailable": "Weather not available",
+    "meteo_set_location": "Set the location in the web app",
+    "meteo_max": "MAX",
+    "meteo_min": "MIN",
+    "meteo_max_val": "MAX {v}°",
+    "meteo_min_val": "MIN {v}°",
+
+    "week_holiday": "Holiday",
+    "week_today": "Today",
+    "week_tomorrow": "Tomorrow",
+
+    "riposo_upload": "Upload an image from the web app",
+
+    "mensa_title": "LUNCH",
+    "mensa_setup": "Set the menu in the web app",
+    "mensa_week": "{title} · week {i} of {n}",
+    "mensa_default_title": "Menu",
+    "mensa_head_near": "{when}, {weekday} {day}",
+    "mensa_none": "No school lunch",
+
+    "tips": {
+      "rain": ["Umbrella or raincoat ", "{when}"],
+      "snow": ["Snow ", "{when}: boots and gloves"],
+      "cold": ["Warm coat ", "today"],
+      "hot": ["Full water bottle ", "today"]
+    },
+
+    "weather": {
+      "sereno": "Clear", "poco_nuvoloso": "Mostly clear", "parz_nuvoloso": "Partly cloudy",
+      "nuvoloso": "Cloudy", "nebbia": "Fog", "pioviggine": "Drizzle",
+      "pioggia_gelata": "Freezing rain", "pioggia_debole": "Light rain", "pioggia": "Rain",
+      "pioggia_forte": "Heavy rain", "neve_debole": "Light snow", "neve": "Snow",
+      "neve_forte": "Heavy snow", "nevischio": "Snow grains", "rovesci": "Showers",
+      "rovesci_forti": "Heavy showers", "temporale": "Thunderstorm", "sconosciuto": "—"
+    },
+
+    "colors": {
+      "rosso": "red", "arancione": "orange", "giallo": "yellow", "verde": "green",
+      "verde chiaro": "light green", "azzurro": "light blue", "blu": "blue", "blu scuro": "dark blue",
+      "viola": "purple", "lilla": "lilac", "rosa": "pink", "marrone": "brown",
+      "grigio": "grey", "nero": "black", "bianco": "white"
+    }
+  },
+
+  "demo": {
+    "events": ["Swimming", "Tea at Grandma's", "Marta's birthday party", "Mini-basketball match"]
+  },
+
+  "server": {
+    "unknown_section": "Unknown section",
+    "search_unavailable": "Search not available: {error}",
+    "image_unreadable": "Cannot read image: {error}",
+    "image_not_found": "Image not found",
+    "image_default_name": "Image"
+  },
+
+  "seed": {
+    "class_name": "Year 1",
+    "menu_title": "Menu",
+    "subjects": [
+      ["English", ["Reading book", "Lined notebook"]],
+      ["Maths", ["Maths workbook", "Squared notebook"]],
+      ["Languages", ["Language book"]],
+      ["History", ["History notebook"]],
+      ["Geography", ["Geography notebook"]],
+      ["Science", ["Science notebook"]],
+      ["Art", ["Sketchbook", "Coloured pencils"]],
+      ["Music", ["Recorder"]],
+      ["PE", ["Tracksuit", "Trainers"]],
+      ["RE", ["RE notebook"]]
+    ]
+  },
+
+  "web": {
+    "app_title": "Zaino — control panel",
+    "title": "Zaino",
+    "title_child": "{name}'s Zaino",
+    "subtitle": "Display control panel",
+    "subtitle_class": "Class {cls} · display control panel",
+    "error": "Error: {msg}",
+    "none_option": "—",
+    "choose": "Choose…",
+
+    "nav": {"anteprima": "Screen", "orario": "Timetable", "materie": "Subjects", "diario": "Diary", "mensa": "Lunch",
+            "calendari": "Calendars", "riposo": "Images", "impostazioni": "Settings"},
+    "pages": {"auto": "Now", "home": "Today", "zaino": "Backpack", "mensa": "Lunch", "meteo": "Weather",
+              "settimana": "Week", "riposo": "Rest"},
+    "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+
+    "preview": {
+      "setup_hint": "<strong>First step:</strong> set the weather location in <em>Settings</em>, then the timetable and subjects.",
+      "screen_alt": "Preview of the e-paper screen",
+      "device_state": "Last seen {when} · page {page} · battery {pct}%",
+      "device_never": "The device hasn't connected yet."
+    },
+
+    "orario": {
+      "title": "Weekly timetable",
+      "entry": "Start", "exit": "End", "hours": "Lessons",
+      "hour_aria": "Lesson {n}", "remove_hour": "Remove lesson {n}", "add_hour": "Add lesson",
+      "extras": "Always bring on this day (one per line)",
+      "save": "Save timetable", "saved": "Timetable saved"
+    },
+
+    "materie": {
+      "title": "Subjects",
+      "intro": "Pick the colour the teacher uses: the style on the screen is suggested automatically and you can change it.",
+      "real_color": "Real colour", "name": "Subject name", "short": "Short name", "delete": "Delete {name}",
+      "on_screen": "On the screen", "style": "Style on the screen",
+      "color_name": "Colour name (shown on the display when the style is stripes or dots)",
+      "color_name_ph": "e.g. blue", "color_name_aria": "Colour name",
+      "in_zaino": "Show in the backpack (untick for lunch and the like)",
+      "materials": "Things to bring (one per line)",
+      "new": "New subject",
+      "confirm_delete": "Delete {name}? It will also be removed from the timetable.",
+      "add": "Add subject", "save": "Save subjects", "saved": "Subjects saved"
+    },
+
+    "diario": {
+      "title": "Diary", "new": "New entry", "type": "Type", "subject": "Subject", "no_subject": "None",
+      "date": "Day", "end_date": "Until (for several days)",
+      "text": "Description", "text_ph": "e.g. worksheet page 12",
+      "bring": "Put in the backpack, comma separated", "bring_ph": "e.g. signed permission slip, snack",
+      "add": "Add to diary", "upcoming": "Coming up", "show_past": "show past",
+      "types": {"compito": "Homework", "verifica": "Test", "avviso": "Notice", "gita": "Trip", "vacanza": "Holiday"},
+      "type_vacanza_option": "Holiday (no school)",
+      "bring_line": "Backpack: {items}",
+      "delete": "Delete entry",
+      "empty": "Nothing coming up. Add homework, tests or holidays above.",
+      "need_date": "Pick the day", "added": "Added to the diary", "deleted": "Entry deleted"
+    },
+
+    "mensa": {
+      "title": "School lunch",
+      "intro": "The school's rotating menu: one card per week, one dish per line. Today's lunch also appears on the Today page.",
+      "enabled": "Show lunch on the Today page",
+      "pages_hint": "The Lunch page is turned on and ordered in Settings → Display pages.",
+      "name": "Menu name", "name_ph": "e.g. Summer menu",
+      "current": "This week is", "week_option": "week {n}", "choose": "— choose —",
+      "info": "{n}-week rotation, week 1 started on Monday {date}.",
+      "info_missing": "Tell me which week of the menu is the current one.",
+      "week_title": "Week {n}", "in_progress": " · current",
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "add_week": "Add week", "remove_week": "Remove the last one", "confirm_remove": "Remove the last week?",
+      "save": "Save menu", "saved": "Menu saved"
+    },
+
+    "calendari": {
+      "title": "iCal calendars",
+      "intro": "Public .ics or webcal:// links (sports, activities). Events appear on the main screen.",
+      "active": "active", "name_ph": "Name (e.g. Sports)", "name_aria": "Calendar name", "delete": "Delete calendar",
+      "url": "iCal link",
+      "empty": "No calendars. Add the iCal link of the sports calendar.",
+      "add": "Add calendar", "test": "Test", "save": "Save calendars", "saved": "Calendars saved",
+      "test_title": "Next 7 days", "test_empty": "No events found. Did you save before testing?"
+    },
+
+    "riposo": {
+      "title": "Rest images",
+      "intro": "Shown at night (and, if you like, on days without school). They're converted to 4 colours with dithering.",
+      "new": "New image", "fit": "Fit",
+      "fit_cover": "Fill the screen (crop)", "fit_contain": "Whole image (white borders)",
+      "upload": "Upload image", "which": "Which one to show",
+      "mode_manual": "Always the chosen one", "mode_daily": "A different one each day",
+      "on_screen": "On the screen", "show_this": "Show this one", "delete": "Delete", "delete_aria": "Delete {name}",
+      "empty": "No images uploaded.",
+      "need_file": "Choose an image", "uploaded": "Image uploaded", "chosen": "Image chosen",
+      "confirm_delete": "Delete this image?", "deleted": "Image deleted"
+    },
+
+    "impostazioni": {
+      "title": "Settings",
+      "child": "Child's name", "class": "Class",
+      "city": "Weather location", "city_ph": "e.g. London", "search": "Search", "results": "Search results",
+      "lat": "Latitude", "lon": "Longitude",
+      "city_needed": "Type the name of the place", "city_none": "No place found",
+      "city_set": "Location set: remember to save",
+      "lang_title": "Language", "lang_intro": "Language of the display and of the web app.", "lang_saved": "Language saved",
+      "color_title": "Display colour",
+      "color_intro": "With more than one child, give each a different colour: you can tell at a glance whose display it is. It also changes the colour of this web app.",
+      "color_saved": "Colour saved",
+      "wake_title": "Device wake-ups", "wake": "Update times, comma separated",
+      "night_from": "Night from", "night_to": "Night until",
+      "riposo_night": "Rest image at night", "riposo_no_school": "Rest image on days without school",
+      "pages_title": "Display pages",
+      "pages_intro": "Turn on the pages you want and put them in the order the front button cycles through them.",
+      "move_up": "Move {page} up", "move_down": "Move {page} down",
+      "hold": "How long a page stays after a button press (minutes)",
+      "sched_title": "Daily schedule",
+      "sched_intro": "Which page to show in each time slot. The first matching slot wins; night and the rest image come first.",
+      "from": "From", "to": "To", "page": "Page", "when": "When", "remove_slot": "Remove slot",
+      "when_options": {"scuola": "school days", "vigilia": "the evening before school", "no_scuola": "days without school", "sempre": "always"},
+      "sched_empty": "No slots: the display always shows the page chosen below.",
+      "add_slot": "Add slot", "default_page": "At other times",
+      "week_events": "Also show upcoming events at the bottom of the Week page",
+      "color_labels": "Write the colour name next to subjects shown as stripes or dots (e.g. \"blue\")",
+      "save": "Save settings", "saved": "Settings saved"
+    },
+
+    "themes": {"rosso": "Red", "nero": "Black", "giallo": "Yellow"},
+    "styles": {
+      "rosso": "Red", "giallo": "Yellow", "nero": "Black",
+      "arancione": "Orange (R+Y)", "rosa": "Pink (R+W)", "giallo_chiaro": "Light yellow (Y+W)",
+      "grigio": "Grey (B+W)", "bordeaux": "Burgundy (R+B)", "oliva": "Olive (Y+B)",
+      "righe_nere": "Black stripes (for blue)", "puntini_neri": "Black dots (for green)",
+      "righe_rosse": "Red stripes (for purple)", "nessuno": "No colour"
+    }
+  }
+}

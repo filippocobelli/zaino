@@ -1,0 +1,14 @@
+menu "Zaino"
+    config ZAINO_SERVER_URL
+        string "URL del server Zaino (es. http://192.168.1.50:3021)"
+        default "http://192.168.1.100:3021"
+    config ZAINO_BUTTON_PAGE_SECONDS
+        int "Secondi prima di tornare alla pagina automatica dopo un tasto (se il server non lo indica)"
+        default 180
+    config ZAINO_RETRY_SECONDS
+        int "Secondi prima di riprovare se Wi-Fi o server non rispondono"
+        default 900
+    config ZAINO_MAX_SLEEP_SECONDS
+        int "Sonno massimo in un colpo (l'orologio interno deriva: meglio risvegli brevi)"
+        default 3600
+endmenu

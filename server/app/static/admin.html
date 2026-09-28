@@ -1,0 +1,527 @@
+<!doctype html>
+<!-- SPDX-License-Identifier: GPL-3.0-or-later -->
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Zaino</title>
+<link rel="icon" type="image/png" href="/static/favicon.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/static/manifest.webmanifest">
+<meta name="theme-color" content="#C42424" id="themeColor">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Zaino">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<style>
+@font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-Bold.ttf);font-weight:700}
+@font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-SemiBold.ttf);font-weight:600}
+@font-face{font-family:"Barlow Condensed";src:url(/fonts/BarlowCondensed-Medium.ttf);font-weight:500}
+:root{
+  --paper:#EDEEEA; --grid:#D5DAE4; --ink:#1C1C1C; --red:#C42424; --yellow:#F2C400; --white:#FAFAF7;
+  --acc:#C42424; --on-acc:#FAFAF7;
+  --muted:#5E6068; --cond:"Barlow Condensed","Arial Narrow",sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:20px 20px;padding-bottom:env(safe-area-inset-bottom)}
+header{position:sticky;top:0;z-index:5;background:var(--acc);color:var(--on-acc);padding:calc(10px + env(safe-area-inset-top)) 16px 0}
+header h1{margin:0;font:700 34px/1 var(--cond);letter-spacing:.01em}
+header p{margin:2px 0 8px;font:500 17px var(--cond);opacity:.9}
+nav{display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;margin:0 -16px;padding:0 12px}
+nav button{flex:none;border:0;background:transparent;color:var(--on-acc);font:600 19px var(--cond);padding:8px 12px 10px;cursor:pointer;border-radius:6px 6px 0 0}
+nav button[aria-current=true]{background:var(--paper);color:var(--ink)}
+main{max-width:760px;margin:0 auto;padding:16px}
+section{display:none}section.on{display:block}
+h2{font:700 28px/1.1 var(--cond);margin:8px 0 12px}
+h3{font:700 21px/1.1 var(--cond);margin:0 0 8px}
+.sheet{background:var(--white);border:2px solid var(--ink);border-radius:4px;padding:14px;margin-bottom:14px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.grow{flex:1 1 160px;min-width:0}
+label{display:block;font:600 16px var(--cond);color:var(--muted);margin:8px 0 3px}
+input[type=text],input[type=url],input[type=date],input[type=time],input[type=number],select,textarea{
+  width:100%;font:inherit;padding:8px 10px;border:1.5px solid #9A9CA3;border-radius:4px;background:#fff;color:var(--ink)}
+textarea{min-height:64px;resize:vertical}
+input[type=color]{width:44px;height:40px;padding:2px;border:1.5px solid #9A9CA3;border-radius:4px;background:#fff}
+input[type=checkbox]{width:20px;height:20px;accent-color:var(--acc);vertical-align:middle}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px}
+button.act{font:700 18px var(--cond);border:2px solid var(--ink);background:var(--ink);color:var(--white);padding:7px 16px;border-radius:4px;cursor:pointer}
+button.act.alt{background:var(--white);color:var(--ink)}
+button.x{border:0;background:none;color:var(--red);font:700 22px var(--cond);cursor:pointer;padding:4px 8px}
+.bar{position:sticky;bottom:0;display:flex;gap:8px;justify-content:flex-end;padding:10px 0}
+.sw{height:22px;width:52px;image-rendering:pixelated;border-radius:2px;flex:none}
+.screen{display:block;width:100%;max-width:800px;image-rendering:pixelated;border:10px solid #fff;border-radius:10px;box-shadow:0 0 0 2px var(--ink)}
+.pages{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.pages button{font:600 18px var(--cond);border:2px solid var(--ink);background:var(--white);padding:4px 12px;border-radius:20px;cursor:pointer}
+.pages button[aria-pressed=true]{background:var(--ink);color:var(--white)}
+.meta{color:var(--muted);font-size:14px}
+.slot{display:flex;gap:6px;align-items:center;margin-bottom:6px}
+.slot b{font:700 18px var(--cond);width:26px;color:var(--muted)}
+.slot select{flex:1}
+.entry{display:flex;gap:10px;align-items:flex-start;border-top:1px solid #d3d4d8;padding:10px 0}
+.entry:first-child{border-top:0}
+.tag{font:700 15px var(--cond);padding:1px 8px;border-radius:3px;background:var(--ink);color:#fff;white-space:nowrap}
+.tag.verifica,.tag.gita{background:var(--red)}.tag.vacanza{background:var(--yellow);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;
+  font:600 18px var(--cond);padding:8px 18px;border-radius:4px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.pic{background:var(--white);border:2px solid var(--ink);border-radius:4px;padding:8px}
+.pic.on{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc)}
+.themes{display:flex;gap:8px;flex-wrap:wrap}
+.themes button{display:flex;align-items:center;gap:8px;font:600 18px var(--cond);border:2px solid var(--ink);background:var(--white);padding:4px 14px 4px 6px;border-radius:20px;cursor:pointer}
+.themes button i{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--ink)}
+.themes button[aria-pressed=true]{box-shadow:0 0 0 3px var(--ink)}
+.pic img{display:block;width:100%;image-rendering:pixelated;border-radius:2px}
+.pic .row{margin-top:8px}
+.pic .now{font:700 17px var(--cond);color:var(--red)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}
+@media (max-width:520px){.grid2{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="title">Zaino</h1>
+  <p id="subtitle"></p>
+  <nav role="tablist">
+    <button data-t="anteprima" data-i="nav.anteprima" aria-current="true"></button>
+    <button data-t="orario" data-i="nav.orario"></button>
+    <button data-t="materie" data-i="nav.materie"></button>
+    <button data-t="diario" data-i="nav.diario"></button>
+    <button data-t="mensa" data-i="nav.mensa"></button>
+    <button data-t="calendari" data-i="nav.calendari"></button>
+    <button data-t="riposo" data-i="nav.riposo"></button>
+    <button data-t="impostazioni" data-i="nav.impostazioni"></button>
+  </nav>
+</header>
+<main>
+
+<section id="anteprima" class="on">
+  <div class="pages" id="pageBtns"></div>
+  <div class="sheet" id="setupHint" data-ih="preview.setup_hint" hidden></div>
+  <img class="screen" id="screen" data-ialt="preview.screen_alt" alt="">
+  <p class="meta" id="devState"></p>
+</section>
+
+<section id="orario">
+  <h2 data-i="orario.title"></h2>
+  <div id="days"></div>
+  <div class="bar"><button class="act" onclick="saveOrario()" data-i="orario.save"></button></div>
+</section>
+
+<section id="materie">
+  <h2 data-i="materie.title"></h2>
+  <p class="meta" data-i="materie.intro"></p>
+  <div id="subjects"></div>
+  <div class="bar"><button class="act alt" onclick="addSubject()" data-i="materie.add"></button><button class="act" onclick="saveSubjects()" data-i="materie.save"></button></div>
+</section>
+
+<section id="diario">
+  <h2 data-i="diario.title"></h2>
+  <div class="sheet">
+    <h3 data-i="diario.new"></h3>
+    <div class="grid2">
+      <div><label for="dType" data-i="diario.type"></label>
+        <select id="dType"><option value="compito" data-i="diario.types.compito"></option><option value="verifica" data-i="diario.types.verifica"></option><option value="avviso" data-i="diario.types.avviso"></option><option value="gita" data-i="diario.types.gita"></option><option value="vacanza" data-i="diario.type_vacanza_option"></option></select></div>
+      <div><label for="dSubj" data-i="diario.subject"></label><select id="dSubj"></select></div>
+      <div><label for="dDate" data-i="diario.date"></label><input type="date" id="dDate"></div>
+      <div><label for="dEnd" data-i="diario.end_date"></label><input type="date" id="dEnd"></div>
+    </div>
+    <label for="dText" data-i="diario.text"></label><input type="text" id="dText" data-ip="diario.text_ph">
+    <label for="dBring" data-i="diario.bring"></label><input type="text" id="dBring" data-ip="diario.bring_ph">
+    <div class="bar"><button class="act" onclick="addDiary()" data-i="diario.add"></button></div>
+  </div>
+  <div class="sheet"><div class="row"><h3 class="grow" data-i="diario.upcoming"></h3><label><input type="checkbox" id="showPast" onchange="drawDiary()"> <span data-i="diario.show_past"></span></label></div><div id="diaryList"></div></div>
+</section>
+
+<section id="mensa">
+  <h2 data-i="mensa.title"></h2>
+  <p class="meta" data-i="mensa.intro"></p>
+  <div class="sheet">
+    <label><input type="checkbox" id="mOn"> <span data-i="mensa.enabled"></span></label>
+    <p class="meta" data-i="mensa.pages_hint"></p>
+    <div class="grid2">
+      <div><label for="mTitle" data-i="mensa.name"></label><input type="text" id="mTitle" data-ip="mensa.name_ph"></div>
+      <div><label for="mNow" data-i="mensa.current"></label><select id="mNow"></select></div>
+    </div>
+    <p class="meta" id="mInfo"></p>
+  </div>
+  <div id="mWeeks"></div>
+  <div class="bar"><button class="act alt" onclick="mAddWeek()" data-i="mensa.add_week"></button><button class="act alt" onclick="mDelWeek()" data-i="mensa.remove_week"></button><button class="act" onclick="saveMensa()" data-i="mensa.save"></button></div>
+</section>
+
+<section id="calendari">
+  <h2 data-i="calendari.title"></h2>
+  <p class="meta" data-i="calendari.intro"></p>
+  <div id="cals"></div>
+  <div class="bar"><button class="act alt" onclick="addCal()" data-i="calendari.add"></button><button class="act alt" onclick="testCals()" data-i="calendari.test"></button><button class="act" onclick="saveCals()" data-i="calendari.save"></button></div>
+  <div class="sheet" id="calTest" hidden></div>
+</section>
+
+<section id="riposo">
+  <h2 data-i="riposo.title"></h2>
+  <p class="meta" data-i="riposo.intro"></p>
+  <div class="sheet">
+    <label for="rFile" data-i="riposo.new"></label><input type="file" id="rFile" accept="image/*">
+    <label for="rMode" data-i="riposo.fit"></label>
+    <select id="rMode"><option value="cover" data-i="riposo.fit_cover"></option><option value="contain" data-i="riposo.fit_contain"></option></select>
+    <div class="bar"><button class="act" onclick="upRiposo()" data-i="riposo.upload"></button></div>
+  </div>
+  <div class="sheet">
+    <label for="rRot" data-i="riposo.which"></label>
+    <select id="rRot" onchange="setRot(this.value)"><option value="manuale" data-i="riposo.mode_manual"></option><option value="giornaliera" data-i="riposo.mode_daily"></option></select>
+  </div>
+  <div class="gallery" id="gallery"></div>
+</section>
+
+<section id="impostazioni">
+  <h2 data-i="impostazioni.title"></h2>
+  <div class="sheet grid2">
+    <div><label for="sName" data-i="impostazioni.child"></label><input type="text" id="sName"></div>
+    <div><label for="sClass" data-i="impostazioni.class"></label><input type="text" id="sClass"></div>
+    <div><label for="sCity" data-i="impostazioni.city"></label>
+      <div class="row"><div class="grow"><input type="text" id="sCity" data-ip="impostazioni.city_ph"></div><button class="act alt" onclick="findCity()" data-i="impostazioni.search"></button></div>
+      <select id="sCityRes" hidden data-ia="impostazioni.results" onchange="pickCity(this.value)"></select></div>
+    <div class="row"><div class="grow"><label for="sLat" data-i="impostazioni.lat"></label><input type="number" step="0.001" id="sLat"></div><div class="grow"><label for="sLon" data-i="impostazioni.lon"></label><input type="number" step="0.001" id="sLon"></div></div>
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.lang_title"></h3>
+    <p class="meta" data-i="impostazioni.lang_intro"></p>
+    <select id="sLang" data-ia="impostazioni.lang_title" onchange="setLang(this.value)"></select>
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.color_title"></h3>
+    <p class="meta" data-i="impostazioni.color_intro"></p>
+    <div class="themes" id="themeList" role="group" data-ia="impostazioni.color_title"></div>
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.wake_title"></h3>
+    <label for="sWake" data-i="impostazioni.wake"></label><input type="text" id="sWake">
+    <div class="grid2">
+      <div><label for="sNight1" data-i="impostazioni.night_from"></label><input type="time" id="sNight1"></div>
+      <div><label for="sNight2" data-i="impostazioni.night_to"></label><input type="time" id="sNight2"></div>
+    </div>
+    <label><input type="checkbox" id="sRN"> <span data-i="impostazioni.riposo_night"></span></label>
+    <label><input type="checkbox" id="sRS"> <span data-i="impostazioni.riposo_no_school"></span></label>
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.pages_title"></h3>
+    <p class="meta" data-i="impostazioni.pages_intro"></p>
+    <div id="pageList"></div>
+    <label for="sHold" data-i="impostazioni.hold"></label><input type="number" id="sHold" min="1" max="60" step="1">
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.sched_title"></h3>
+    <p class="meta" data-i="impostazioni.sched_intro"></p>
+    <div id="schedList"></div>
+    <button class="act alt" onclick="addSlot()" data-i="impostazioni.add_slot"></button>
+    <label for="sDef" data-i="impostazioni.default_page"></label><select id="sDef"></select>
+    <label><input type="checkbox" id="sSE"> <span data-i="impostazioni.week_events"></span></label>
+    <label><input type="checkbox" id="sCL"> <span data-i="impostazioni.color_labels"></span></label>
+  </div>
+  <div class="bar"><button class="act" onclick="saveSettings()" data-i="impostazioni.save"></button></div>
+</section>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const DAY_KEYS=["lun","mar","mer","gio","ven","sab"];
+const PAGE_IDS=["auto","home","zaino","mensa","meteo","settimana","riposo"];
+const TYPE_IDS=["compito","verifica","avviso","gita","vacanza"];
+let C=null, L={web:{}}, LOC="it-IT", curPage="auto";
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* ---------- lingua ---------- */
+// t("orario.save") oppure t("materie.delete",{name:"Arte"}); i testi sono in server/app/lang/*.json -> "web"
+function t(k,v){
+  let s=k.split(".").reduce((o,p)=>o==null?o:o[p],L.web);
+  if(s==null)return k;
+  if(v&&typeof s==="string")s=s.replace(/\{(\w+)\}/g,(m,n)=>v[n]??"");
+  return s;
+}
+function applyStatic(){
+  document.documentElement.lang=L.lang||"it";
+  document.title=t("app_title");
+  document.querySelectorAll("[data-i]").forEach(e=>e.textContent=t(e.dataset.i));
+  document.querySelectorAll("[data-ih]").forEach(e=>e.innerHTML=t(e.dataset.ih));
+  document.querySelectorAll("[data-ip]").forEach(e=>e.placeholder=t(e.dataset.ip));
+  document.querySelectorAll("[data-ia]").forEach(e=>e.setAttribute("aria-label",t(e.dataset.ia)));
+  document.querySelectorAll("[data-ialt]").forEach(e=>e.alt=t(e.dataset.ialt));
+}
+const pageName=k=>t("pages."+k);
+
+function toast(m){const e=$("toast");e.textContent=m;e.classList.add("show");clearTimeout(e._h);e._h=setTimeout(()=>e.classList.remove("show"),1800)}
+async function api(path,method="GET",body){
+  const r=await fetch(path,{method,headers:body?{"Content-Type":"application/json"}:{},body:body?JSON.stringify(body):undefined});
+  if(!r.ok){const e=await r.text();toast(t("error",{msg:e.slice(0,80)}));throw new Error(e)}
+  return r.json();
+}
+async function put(sec,val,msg){await api("/api/"+sec,"PUT",val);toast(msg);await load(false)}
+
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-current",x===b));
+  document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===b.dataset.t));
+  if(b.dataset.t==="anteprima")refreshScreen();
+  if(b.dataset.t==="riposo")drawGallery();
+});
+
+async function load(full=true){
+  C=await api("/api/config");
+  const n=C.settings.child_name;
+  $("title").textContent=n?t("title_child",{name:n}):t("title");
+  $("subtitle").textContent=C.settings.class_name?t("subtitle_class",{cls:C.settings.class_name}):t("subtitle");
+  applyTheme(C.settings.accent);
+  if(full){drawPages();drawSubjects();drawDays();drawDiary();drawMensa();drawCals();drawSettings();refreshScreen()}
+  else{drawDevState();fillSubjSelect()}
+}
+
+/* ---------- anteprima ---------- */
+function drawPages(){
+  $("pageBtns").innerHTML=PAGE_IDS.map(k=>`<button aria-pressed="${k===curPage}" data-p="${k}">${esc(pageName(k))}</button>`).join("");
+  $("pageBtns").querySelectorAll("button").forEach(b=>b.onclick=()=>{curPage=b.dataset.p;drawPages();refreshScreen()});
+}
+function refreshScreen(){$("screen").src=`/preview/${curPage}.png?${Date.now()}`;drawDevState()}
+function drawDevState(){
+  const s=C.state||{};
+  $("setupHint").hidden=C.demo||!(Number(C.settings.lat)===0&&Number(C.settings.lon)===0);
+  $("devState").textContent=s.last_seen
+    ?t("preview.device_state",{when:new Date(s.last_seen).toLocaleString(LOC),page:s.last_page?pageName(s.last_page):"—",pct:s.battery_pct??"—"})
+    :t("preview.device_never");
+}
+
+/* ---------- materie ---------- */
+function styleOpts(sel){return C.styles.map(s=>`<option value="${s.id}" ${s.id===sel?"selected":""}>${esc(t("styles."+s.id))}</option>`).join("")}
+function drawSubjects(){
+  $("subjects").innerHTML=C.subjects.map((s,i)=>`
+  <div class="sheet">
+    <div class="row">
+      <input type="color" value="${esc(s.color)}" aria-label="${esc(t("materie.real_color"))}" onchange="colorChanged(${i},this.value)">
+      <div class="grow"><input type="text" value="${esc(s.name)}" aria-label="${esc(t("materie.name"))}" oninput="C.subjects[${i}].name=this.value"></div>
+      <input type="text" value="${esc(s.short)}" aria-label="${esc(t("materie.short"))}" style="width:64px" maxlength="3" oninput="C.subjects[${i}].short=this.value">
+      <button class="x" aria-label="${esc(t("materie.delete",{name:s.name}))}" onclick="delSubject(${i})">×</button>
+    </div>
+    <label>${esc(t("materie.on_screen"))}</label>
+    <div class="row"><img class="sw" id="sw${i}" src="/api/swatch/${s.style}.png" alt="">
+      <div class="grow"><select aria-label="${esc(t("materie.style"))}" onchange="C.subjects[${i}].style=this.value;$('sw${i}').src='/api/swatch/'+this.value+'.png'">${styleOpts(s.style)}</select></div></div>
+    <label>${esc(t("materie.color_name"))}</label>
+    <input type="text" value="${esc(s.color_name||"")}" placeholder="${esc(t("materie.color_name_ph"))}" maxlength="14" aria-label="${esc(t("materie.color_name_aria"))}" oninput="C.subjects[${i}].color_name=this.value">
+    <label><input type="checkbox" ${s.zaino!==false?"checked":""} onchange="C.subjects[${i}].zaino=this.checked"> ${esc(t("materie.in_zaino"))}</label>
+    <label>${esc(t("materie.materials"))}</label>
+    <textarea oninput="C.subjects[${i}].materials=this.value.split('\\n')">${esc((s.materials||[]).join("\n"))}</textarea>
+  </div>`).join("");
+}
+async function colorChanged(i,v){
+  C.subjects[i].color=v;
+  const r=await api("/api/suggest?color="+encodeURIComponent(v));
+  C.subjects[i].style=r.style;C.subjects[i].color_name=r.name;drawSubjects();
+}
+function addSubject(){C.subjects.push({name:t("materie.new"),short:"",color:"#1C1C1C",style:"nero",materials:[]});drawSubjects()}
+function delSubject(i){if(confirm(t("materie.confirm_delete",{name:C.subjects[i].name}))){C.subjects.splice(i,1);drawSubjects()}}
+async function saveSubjects(){await put("subjects",C.subjects,t("materie.saved"));drawSubjects();drawDays()}
+
+/* ---------- orario ---------- */
+function subjOpts(sel){return `<option value="">${esc(t("none_option"))}</option>`+C.subjects.map(s=>`<option value="${s.id}" ${s.id===sel?"selected":""}>${esc(s.name)}</option>`).join("")}
+function drawDays(){
+  const names=t("days");
+  $("days").innerHTML=DAY_KEYS.map((k,di)=>{
+    const d=C.timetable[k]||(C.timetable[k]={entry:"",exit:"",slots:[]});
+    return `<div class="sheet"><h3>${esc(names[di])}</h3>
+    <div class="row"><div class="grow"><label>${esc(t("orario.entry"))}</label><input type="time" value="${d.entry||""}" onchange="C.timetable.${k}.entry=this.value"></div>
+    <div class="grow"><label>${esc(t("orario.exit"))}</label><input type="time" value="${d.exit||""}" onchange="C.timetable.${k}.exit=this.value"></div></div>
+    <label>${esc(t("orario.hours"))}</label>
+    ${d.slots.map((id,j)=>{const s=C.subjects.find(x=>x.id===id);return `<div class="slot"><b>${j+1}</b>
+      <img class="sw" src="/api/swatch/${s?s.style:"nero"}.png" alt="" style="width:34px">
+      <select aria-label="${esc(t("orario.hour_aria",{n:j+1}))}" onchange="C.timetable.${k}.slots[${j}]=this.value;drawDays()">${subjOpts(id)}</select>
+      <button class="x" aria-label="${esc(t("orario.remove_hour",{n:j+1}))}" onclick="C.timetable.${k}.slots.splice(${j},1);drawDays()">×</button></div>`}).join("")}
+    <button class="act alt" onclick="C.timetable.${k}.slots.push(C.subjects[0]?.id||'');drawDays()">${esc(t("orario.add_hour"))}</button>
+    <label>${esc(t("orario.extras"))}</label>
+    <textarea oninput="C.extras.${k}=this.value.split('\\n')">${esc((C.extras[k]||[]).join("\n"))}</textarea>
+    </div>`}).join("");
+}
+async function saveOrario(){
+  for(const k of DAY_KEYS){C.timetable[k].slots=C.timetable[k].slots.filter(Boolean);C.extras[k]=(C.extras[k]||[]).map(s=>s.trim()).filter(Boolean)}
+  await api("/api/timetable","PUT",C.timetable);await put("extras",C.extras,t("orario.saved"));drawDays();
+}
+
+/* ---------- diario ---------- */
+function fillSubjSelect(){$("dSubj").innerHTML=`<option value="">${esc(t("diario.no_subject"))}</option>`+C.subjects.map(s=>`<option value="${s.id}">${esc(s.name)}</option>`).join("")}
+function drawDiary(){
+  fillSubjSelect();
+  if(!$("dDate").value){const d=new Date();d.setDate(d.getDate()+1);$("dDate").value=ymd(d)}
+  const today=ymd(new Date()), past=$("showPast").checked;
+  const list=[...C.diary].filter(e=>past||(e.end_date||e.date)>=today).sort((a,b)=>a.date.localeCompare(b.date));
+  $("diaryList").innerHTML=list.length?list.map(e=>{
+    const s=C.subjects.find(x=>x.id===e.subject_id);
+    const d=new Date(e.date+"T12:00").toLocaleDateString(LOC,{weekday:"short",day:"numeric",month:"short"});
+    const d2=e.end_date?" → "+new Date(e.end_date+"T12:00").toLocaleDateString(LOC,{day:"numeric",month:"short"}):"";
+    return `<div class="entry"><span class="tag ${e.type}">${esc(t("diario.types."+e.type))}</span>
+      <div class="grow"><strong>${d}${d2}</strong>${s?" · "+esc(s.name):""}<br>${esc(e.text)}${e.bring?.length?`<br><span class="meta">${esc(t("diario.bring_line",{items:e.bring.join(", ")}))}</span>`:""}</div>
+      <button class="x" aria-label="${esc(t("diario.delete"))}" onclick="delDiary('${e.id}')">×</button></div>`}).join("")
+    :`<p class="meta">${esc(t("diario.empty"))}</p>`;
+}
+async function addDiary(){
+  const e={type:$("dType").value,date:$("dDate").value,end_date:$("dEnd").value||null,subject_id:$("dSubj").value||null,
+    text:$("dText").value.trim(),bring:$("dBring").value.split(",").map(s=>s.trim()).filter(Boolean)};
+  if(!e.date){toast(t("diario.need_date"));return}
+  C.diary.push(e);await put("diary",C.diary,t("diario.added"));
+  $("dText").value="";$("dBring").value="";$("dEnd").value="";drawDiary();
+}
+async function delDiary(id){C.diary=C.diary.filter(e=>e.id!==id);await put("diary",C.diary,t("diario.deleted"));drawDiary()}
+
+/* ---------- mensa ---------- */
+function isoMonday(d){const x=new Date(d);x.setHours(12,0,0,0);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+function ymd(x){return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function mCurWeek(){
+  const M=C.mensa, n=M.weeks.length; if(!M.week1)return 0;
+  const w=Math.round((isoMonday(new Date())-isoMonday(new Date(M.week1+"T12:00")))/6048e5);
+  return ((w%n)+n)%n;
+}
+function drawMensa(){
+  const M=C.mensa||(C.mensa={enabled:false,title:"",week1:"",weeks:[[[],[],[],[],[]]]});
+  $("mOn").checked=!!M.enabled;$("mTitle").value=M.title||"";
+  const cur=mCurWeek(), day5=t("mensa.days");
+  $("mNow").innerHTML=M.weeks.map((_,i)=>`<option value="${i}" ${i===cur&&M.week1?"selected":""}>${esc(t("mensa.week_option",{n:i+1}))}</option>`).join("")+(M.week1?"":`<option value="" selected>${esc(t("mensa.choose"))}</option>`);
+  $("mNow").onchange=e=>{if(e.target.value==="")return;const m=isoMonday(new Date());m.setDate(m.getDate()-7*(+e.target.value));M.week1=ymd(m);drawMensa()};
+  $("mInfo").textContent=M.week1?t("mensa.info",{n:M.weeks.length,date:new Date(M.week1+"T12:00").toLocaleDateString(LOC)}):t("mensa.info_missing");
+  $("mWeeks").innerHTML=M.weeks.map((wk,i)=>`<div class="sheet"><h3>${esc(t("mensa.week_title",{n:i+1}))}${i===cur&&M.week1?esc(t("mensa.in_progress")):""}</h3>
+    <div class="grid2">${day5.map((dn,j)=>`<div><label>${esc(dn)}</label><textarea oninput="C.mensa.weeks[${i}][${j}]=this.value.split('\\n')">${esc((wk[j]||[]).join("\n"))}</textarea></div>`).join("")}</div></div>`).join("");
+}
+function mAddWeek(){C.mensa.weeks.push([[],[],[],[],[]]);drawMensa()}
+function mDelWeek(){if(C.mensa.weeks.length>1&&confirm(t("mensa.confirm_remove"))){C.mensa.weeks.pop();drawMensa()}}
+async function saveMensa(){
+  C.mensa.enabled=$("mOn").checked;C.mensa.title=$("mTitle").value.trim();
+  C.mensa.weeks=C.mensa.weeks.map(w=>w.map(d=>(d||[]).map(s=>s.trim()).filter(Boolean)));
+  await put("mensa",C.mensa,t("mensa.saved"));drawMensa();
+}
+
+/* ---------- calendari ---------- */
+function drawCals(){
+  $("cals").innerHTML=C.calendars.map((c,i)=>`<div class="sheet"><div class="row">
+    <label style="margin:0"><input type="checkbox" ${c.enabled!==false?"checked":""} onchange="C.calendars[${i}].enabled=this.checked"> ${esc(t("calendari.active"))}</label>
+    <div class="grow"><input type="text" value="${esc(c.name)}" placeholder="${esc(t("calendari.name_ph"))}" aria-label="${esc(t("calendari.name_aria"))}" oninput="C.calendars[${i}].name=this.value"></div>
+    <button class="x" aria-label="${esc(t("calendari.delete"))}" onclick="C.calendars.splice(${i},1);drawCals()">×</button></div>
+    <label>${esc(t("calendari.url"))}</label><input type="url" value="${esc(c.url)}" placeholder="webcal://…" oninput="C.calendars[${i}].url=this.value"></div>`).join("")
+    ||`<p class="meta">${esc(t("calendari.empty"))}</p>`;
+}
+function addCal(){C.calendars.push({name:"",url:"",enabled:true});drawCals()}
+async function saveCals(){await put("calendars",C.calendars,t("calendari.saved"));drawCals()}
+async function testCals(){
+  const r=await api("/api/calendars/test");const b=$("calTest");b.hidden=false;
+  b.innerHTML=`<h3>${esc(t("calendari.test_title"))}</h3>`+(r.errors.map(e=>`<p style="color:var(--red)">${esc(e)}</p>`).join(""))+
+    (r.events.length?r.events.map(e=>`<div class="entry"><span class="tag">${esc(e.calendar||"—")}</span><div class="grow">${esc(e.start)} · ${esc(e.title)}</div></div>`).join(""):`<p class="meta">${esc(t("calendari.test_empty"))}</p>`);
+}
+
+/* ---------- immagini ---------- */
+function drawGallery(){
+  const imgs=C.riposo_images||[], mode=C.settings.riposo_mode||"manuale", act=C.settings.riposo_active;
+  $("rRot").value=mode;
+  $("gallery").innerHTML=imgs.length?[...imgs].reverse().map(x=>{
+    const on=mode==="manuale"&&x.id===act;
+    return `<div class="pic ${on?"on":""}"><img src="/api/riposo/${x.id}.png" alt="${esc(x.name)}" loading="lazy">
+    <div class="row"><div class="grow"><strong>${esc(x.name)}</strong><br><span class="meta">${esc(x.uploaded||"")}</span></div>
+    ${on?`<span class="now">${esc(t("riposo.on_screen"))}</span>`:mode==="manuale"?`<button class="act alt" onclick="useImg('${x.id}')">${esc(t("riposo.show_this"))}</button>`:""}
+    <button class="x" aria-label="${esc(t("riposo.delete_aria",{name:x.name}))}" onclick="delImg('${x.id}')">${esc(t("riposo.delete"))}</button></div></div>`}).join("")
+    :`<p class="meta">${esc(t("riposo.empty"))}</p>`;
+}
+async function upRiposo(){
+  const f=$("rFile").files[0];if(!f){toast(t("riposo.need_file"));return}
+  const fd=new FormData();fd.append("file",f);fd.append("mode",$("rMode").value);
+  const r=await fetch("/api/riposo",{method:"POST",body:fd});
+  if(!r.ok){toast(t("error",{msg:(await r.text()).slice(0,80)}));return}
+  $("rFile").value="";toast(t("riposo.uploaded"));await load(false);drawGallery();
+}
+async function useImg(id){await api(`/api/riposo/${id}/attiva`,"POST");toast(t("riposo.chosen"));await load(false);drawGallery()}
+async function delImg(id){
+  if(!confirm(t("riposo.confirm_delete")))return;
+  await api(`/api/riposo/${id}`,"DELETE");toast(t("riposo.deleted"));await load(false);drawGallery();
+}
+async function setRot(v){await put("settings",{riposo_mode:v},v==="manuale"?t("riposo.mode_manual"):t("riposo.mode_daily"));drawGallery()}
+
+/* ---------- colore ---------- */
+let accentEdit="rosso";
+function applyTheme(id){
+  const th=(C.themes||[]).find(x=>x.id===id)||(C.themes||[])[0];if(!th)return;
+  document.documentElement.style.setProperty("--acc",th.web);
+  document.documentElement.style.setProperty("--on-acc",th.on_web);
+  $("themeColor").content=th.web;
+}
+function drawThemes(){
+  $("themeList").innerHTML=(C.themes||[]).map(th=>`<button aria-pressed="${th.id===accentEdit}" data-id="${th.id}"><i style="background:${th.web}"></i>${esc(t("themes."+th.id))}</button>`).join("");
+  $("themeList").querySelectorAll("button").forEach(b=>b.onclick=async()=>{
+    accentEdit=b.dataset.id;drawThemes();
+    await put("settings",{accent:accentEdit},t("impostazioni.color_saved"));refreshScreen();
+  });
+}
+
+/* ---------- lingua ---------- */
+function drawLang(){
+  $("sLang").innerHTML=(L.languages||[]).map(l=>`<option value="${l.code}" ${l.code===L.lang?"selected":""}>${esc(l.name)}</option>`).join("");
+}
+async function setLang(code){await api("/api/settings","PUT",{lang:code});location.reload()}
+
+/* ---------- impostazioni ---------- */
+let cityRes=[];
+async function findCity(){
+  const q=$("sCity").value.trim();if(!q){toast(t("impostazioni.city_needed"));return}
+  const r=await api("/api/geocode?q="+encodeURIComponent(q));cityRes=r.results;const sel=$("sCityRes");
+  if(!cityRes.length){sel.hidden=true;toast(t("impostazioni.city_none"));return}
+  sel.innerHTML=`<option value="">${esc(t("choose"))}</option>`+cityRes.map((c,i)=>`<option value="${i}">${esc(c.name)} · ${esc(c.admin)} · ${esc(c.country)}</option>`).join("");
+  sel.hidden=false;
+}
+function pickCity(i){if(i==="")return;const c=cityRes[+i];$("sCity").value=c.name;$("sLat").value=c.lat;$("sLon").value=c.lon;toast(t("impostazioni.city_set"))}
+const SCREEN_PAGES=["home","zaino","mensa","meteo","settimana","riposo"];
+let pagesEdit=[];
+function drawPageList(){
+  $("pageList").innerHTML=pagesEdit.map((p,i)=>`<div class="slot">
+    <label style="margin:0;flex:1"><input type="checkbox" ${p.on?"checked":""} onchange="pagesEdit[${i}].on=this.checked"> ${esc(pageName(p.id))}</label>
+    <button class="act alt" aria-label="${esc(t("impostazioni.move_up",{page:pageName(p.id)}))}" ${i===0?"disabled":""} onclick="movePage(${i},-1)">↑</button>
+    <button class="act alt" aria-label="${esc(t("impostazioni.move_down",{page:pageName(p.id)}))}" ${i===pagesEdit.length-1?"disabled":""} onclick="movePage(${i},1)">↓</button></div>`).join("");
+}
+function movePage(i,d){const x=pagesEdit[i];pagesEdit[i]=pagesEdit[i+d];pagesEdit[i+d]=x;drawPageList()}
+const WHEN_IDS=["scuola","vigilia","no_scuola","sempre"];
+let sched=[];
+function pageOpts(sel){return SCREEN_PAGES.map(k=>`<option value="${k}" ${k===sel?"selected":""}>${esc(pageName(k))}</option>`).join("")}
+function drawSched(){
+  $("schedList").innerHTML=sched.map((x,i)=>`<div class="sheet" style="padding:10px;margin-bottom:8px">
+    <div class="row"><div style="flex:1 1 110px;min-width:0"><label>${esc(t("impostazioni.from"))}</label><input type="time" value="${x.from||""}" onchange="sched[${i}].from=this.value"></div>
+    <div style="flex:1 1 110px;min-width:0"><label>${esc(t("impostazioni.to"))}</label><input type="time" value="${x.to||""}" onchange="sched[${i}].to=this.value"></div>
+    <button class="x" aria-label="${esc(t("impostazioni.remove_slot"))}" onclick="sched.splice(${i},1);drawSched()">×</button></div>
+    <div class="row"><div style="flex:1 1 110px;min-width:0"><label>${esc(t("impostazioni.page"))}</label><select onchange="sched[${i}].page=this.value">${pageOpts(x.page)}</select></div>
+    <div style="flex:1 1 110px;min-width:0"><label>${esc(t("impostazioni.when"))}</label><select onchange="sched[${i}].when=this.value">${WHEN_IDS.map(k=>`<option value="${k}" ${k===(x.when||"sempre")?"selected":""}>${esc(t("impostazioni.when_options."+k))}</option>`).join("")}</select></div></div></div>`).join("")
+    ||`<p class="meta">${esc(t("impostazioni.sched_empty"))}</p>`;
+}
+function addSlot(){sched.push({from:"",to:"",page:"home",when:"scuola"});drawSched()}
+function drawSettings(){
+  const s=C.settings;
+  accentEdit=s.accent||"rosso";drawThemes();drawLang();
+  sched=(s.schedule||[]).map(x=>({...x}));drawSched();
+  $("sDef").innerHTML=pageOpts(s.schedule_default||"home");$("sSE").checked=s.settimana_events!==false;
+  pagesEdit=(s.pages||[]).filter(p=>SCREEN_PAGES.includes(p.id)).map(p=>({id:p.id,on:p.on!==false}));
+  SCREEN_PAGES.forEach(k=>{if(!pagesEdit.find(p=>p.id===k))pagesEdit.push({id:k,on:true})});
+  drawPageList();
+  $("sHold").value=s.button_hold_minutes??3;$("sCL").checked=s.color_labels!==false;
+  $("sName").value=s.child_name||"";$("sClass").value=s.class_name||"";$("sCity").value=s.city||"";
+  $("sLat").value=s.lat;$("sLon").value=s.lon;$("sWake").value=(s.wake_times||[]).join(", ");
+  $("sNight1").value=s.night_start||"";$("sNight2").value=s.night_end||"";
+  $("sRN").checked=!!s.riposo_night;$("sRS").checked=!!s.riposo_no_school;
+}
+async function saveSettings(){
+  const wake=$("sWake").value.split(",").map(s=>s.trim()).filter(s=>/^\d{1,2}:\d{2}$/.test(s)).map(s=>s.padStart(5,"0")).sort();
+  await put("settings",{child_name:$("sName").value.trim(),class_name:$("sClass").value.trim(),city:$("sCity").value.trim(),
+    lat:parseFloat($("sLat").value),lon:parseFloat($("sLon").value),wake_times:wake,
+    night_start:$("sNight1").value,night_end:$("sNight2").value,
+    riposo_night:$("sRN").checked,riposo_no_school:$("sRS").checked,
+    pages:pagesEdit,button_hold_minutes:Math.max(1,Math.min(60,parseFloat($("sHold").value)||3)),
+    schedule:sched.filter(x=>x.from&&x.to).map(x=>({from:x.from,to:x.to,page:x.page,when:x.when||"sempre"})),
+    schedule_default:$("sDef").value,settimana_events:$("sSE").checked,color_labels:$("sCL").checked},t("impostazioni.saved"));
+  drawSettings();
+}
+
+(async()=>{L=await api("/api/lang");LOC=L.locale||"it-IT";applyStatic();await load()})();
+</script>
+</body>
+</html>
