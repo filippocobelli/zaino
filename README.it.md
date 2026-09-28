@@ -8,6 +8,8 @@
 
 Gira su [ZECTRIX NOTE4C Devkit](https://zectrix.com/en/note4c.html), un display e-paper da 4,2" (nero, bianco, rosso, giallo) con ESP32-S3 e batteria. I dati restano a casa tua: un piccolo server Docker prepara le schermate, il display si sveglia, le scarica e torna a dormire.
 
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Offrimi%20un%20caff%C3%A8-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/filippocobelli)
+
 ## Cosa fa
 
 ![Il programma della giornata: Oggi la mattina, Settimana il pomeriggio, Zaino la sera, Mensa col tasto](docs/screenshots/programma-giornata.png)
