@@ -7,7 +7,7 @@
 <meta name="description" content="Open-source school dashboard for the four-colour ZECTRIX NOTE4C: today&#x27;s plan, the timetable in the teacher&#x27;s colours, the backpack for tomorrow and the school lunch.">
 <meta property="og:title" content="Zaino · a school dashboard on e-paper for the ZECTRIX NOTE4C">
 <meta property="og:description" content="Open-source school dashboard for the four-colour ZECTRIX NOTE4C: today&#x27;s plan, the timetable in the teacher&#x27;s colours, the backpack for tomorrow and the school lunch.">
-<meta property="og:image" content="https://filippocobelli.github.io/zaino/screenshots/en/cover.png">
+<meta property="og:image" content="https://lab.cobelli.uk/zaino/screenshots/en/cover.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="it" href="it/">
 <style>
@@ -91,6 +91,10 @@ dl.facts dt{font:700 19px/1.35 "Barlow Condensed",sans-serif}dl.facts dd{margin:
 @media(max-width:620px){.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}}
 .note{background:var(--note);border-left:4px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0}
 .note p:last-child{margin:0}
+.buy{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:22px 24px;margin:22px 0}
+.buy .row{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin:14px 0 12px}
+.code{font:600 20px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:1px;border:2px dashed var(--red);color:var(--red);padding:9px 14px;border-radius:8px;background:var(--paper)}
+.buy small{display:block;color:var(--soft);font-size:14px;line-height:1.5}
 .support{border-top:1px solid var(--line);margin-top:66px;padding:44px 0}
 .support .wrap{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
 .support p{margin:0;max-width:34em}
@@ -114,7 +118,7 @@ footer p{margin:0 0 10px}
     <p class="release"><b>Version 1.3</b>, free and open source, for the ZECTRIX NOTE4C: a 4.2″ e-paper display in black, white, red and yellow.</p>
     <h1>The school day, on the wall by the door.</h1>
     <p class="lead">In the morning it shows the day, the weather and what's for lunch. In the afternoon, the timetable in the teacher's colours. The evening before school, what goes in the backpack — and an umbrella warning if it's going to rain.</p>
-    <div class="actions"><a class="btn" href="#install">How to install it</a><a class="btn alt" href="https://github.com/filippocobelli/zaino">Source code on GitHub</a></div>
+    <div class="actions"><a class="btn" href="#install">How to install it</a><a class="btn alt" href="#buy">Get the display</a><a class="btn alt" href="https://github.com/filippocobelli/zaino">Source code on GitHub</a></div>
   </div>
   <figure style="margin:0">
     <div class="device"><div class="screen"><img src="screenshots/en/screen-zaino.png" alt="The Backpack page on the display: English, Maths, RE, PE and Art with what to bring, a maths test, homework and a rain warning." width="800" height="600"></div>
@@ -159,13 +163,24 @@ footer p{margin:0 0 10px}
   <p>The display wakes up at the times you set, or when you press a button. It asks the server for the current page and only redraws if something changed. Then it goes back to deep sleep until the next wake-up, which the server works out for it.</p>
 </div></section>
 
+<section id="buy"><div class="wrap">
+  <h2>Get the display</h2>
+  <p>Zaino runs on the ZECTRIX NOTE4C Devkit: a 4.2″ four-colour e-paper panel with an ESP32-S3 and a 2000 mAh battery. The black-and-white NOTE4 is not compatible.</p>
+  <div class="buy">
+    <b style="font:700 22px/1.2 'Barlow Condensed',sans-serif">3% off your NOTE4C</b>
+    <div class="row"><a class="btn" href="https://shop.zectrixlab.com/ZAINO">Buy on the ZECTRIX shop</a><span>or use the code <span class="code">ZAINO</span></span></div>
+    <small>3% off the entire order, minimum purchase USD 30, one use per customer.</small>
+    <small>This is an affiliate link: if you buy through it, I earn a 5% commission from ZECTRIX and you pay less, not more. It helps me keep building Zaino.</small>
+  </div>
+</div></section>
+
 <section id="install"><div class="wrap">
   <h2>Install it</h2>
   <p>You need a ZECTRIX NOTE4C Devkit, a computer at home that's always on and runs Docker (a NAS, a mini PC, a Raspberry Pi), and a 2.4 GHz Wi-Fi network.</p>
   <ol class="steps"><li><b>Start the server</b><pre><code>git clone https://github.com/filippocobelli/zaino.git
 cd zaino/server
 docker compose up -d --build</code></pre>Then open <code>http://SERVER-IP:3021/admin</code>. For English from the start, set <code>ZAINO_LANG=en</code> in the compose file.</li><li><b>Set it up</b>From the web app: weather location, subjects, timetable, lunch, calendars and the daily schedule.</li><li><b>Back up the display</b>Make a copy of the NOTE4C's memory first. It's your only way back to the factory software.</li><li><b>Install the firmware</b>Connect the display to Wi-Fi with the ZECTRIX reference firmware, build Zaino with your server's address (<code>./build.sh http://192.168.1.50:3021</code>, only Docker needed) and install it with the ZECTRIX firmware updater, keeping the settings.</li></ol>
-  <p>The full guide, in Italian for now, is in <a href="https://github.com/filippocobelli/zaino/blob/main/docs/installazione.md">docs/installazione.md</a>. No NOTE4C yet? <a href="https://zectrix.com/en/note4c.html">It's made by ZECTRIX</a>.</p>
+  <p>The full guide, in Italian for now, is in <a href="https://github.com/filippocobelli/zaino/blob/main/docs/installazione.md">docs/installazione.md</a>. No NOTE4C yet? <a href="#buy">Here is where to get one</a>.</p>
   <h3>What's been tested, and what hasn't</h3>
   <dl class="facts"><div><dt>Display</dt><dd>Only the NOTE4C Devkit with the four-colour panel. The black-and-white NOTE4 is not compatible.</dd></div><div><dt>Tested</dt><dd>On one NOTE4C at home, with the server in Docker on a Proxmox mini PC.</dd></div><div><dt>Battery</dt><dd>Not measured yet. The display sleeps between updates and only redraws when something changes.</dd></div><div><dt>Wi-Fi</dt><dd>The firmware reuses the network saved by the ZECTRIX reference firmware. It can't set up Wi-Fi on its own yet.</dd></div></dl>
 </div></section>

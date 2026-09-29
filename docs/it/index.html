@@ -7,7 +7,7 @@
 <meta name="description" content="Dashboard scolastica open source per lo ZECTRIX NOTE4C a quattro colori: il programma di oggi, l&#x27;orario con i colori della maestra, lo zaino per domani e la mensa.">
 <meta property="og:title" content="Zaino · dashboard scolastica su e-paper per ZECTRIX NOTE4C">
 <meta property="og:description" content="Dashboard scolastica open source per lo ZECTRIX NOTE4C a quattro colori: il programma di oggi, l&#x27;orario con i colori della maestra, lo zaino per domani e la mensa.">
-<meta property="og:image" content="https://filippocobelli.github.io/zaino/screenshots/copertina.png">
+<meta property="og:image" content="https://lab.cobelli.uk/zaino/screenshots/copertina.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="alternate" hreflang="en" href="../">
 <style>
@@ -91,6 +91,10 @@ dl.facts dt{font:700 19px/1.35 "Barlow Condensed",sans-serif}dl.facts dd{margin:
 @media(max-width:620px){.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}}
 .note{background:var(--note);border-left:4px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0}
 .note p:last-child{margin:0}
+.buy{background:#fff;border:2px solid var(--ink);border-radius:12px;padding:22px 24px;margin:22px 0}
+.buy .row{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin:14px 0 12px}
+.code{font:600 20px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:1px;border:2px dashed var(--red);color:var(--red);padding:9px 14px;border-radius:8px;background:var(--paper)}
+.buy small{display:block;color:var(--soft);font-size:14px;line-height:1.5}
 .support{border-top:1px solid var(--line);margin-top:66px;padding:44px 0}
 .support .wrap{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
 .support p{margin:0;max-width:34em}
@@ -114,7 +118,7 @@ footer p{margin:0 0 10px}
     <p class="release"><b>Versione 1.3</b>, libera e open source, per lo ZECTRIX NOTE4C: un display e-paper da 4,2″ nero, bianco, rosso e giallo.</p>
     <h1>La giornata di scuola, appesa accanto alla porta.</h1>
     <p class="lead">La mattina mostra gli impegni, il meteo e cosa c'è in mensa. Il pomeriggio l'orario con i colori della maestra. La sera prima di scuola cosa mettere nello zaino, e l'avviso di prendere l'ombrello se pioverà.</p>
-    <div class="actions"><a class="btn" href="#install">Come installarlo</a><a class="btn alt" href="https://github.com/filippocobelli/zaino">Codice su GitHub</a></div>
+    <div class="actions"><a class="btn" href="#install">Come installarlo</a><a class="btn alt" href="#buy">Il display</a><a class="btn alt" href="https://github.com/filippocobelli/zaino">Codice su GitHub</a></div>
   </div>
   <figure style="margin:0">
     <div class="device"><div class="screen"><img src="../screenshots/schermo-zaino.png" alt="La pagina Zaino sul display: italiano, matematica, religione, motoria e arte con il materiale, una verifica, i compiti e l&#x27;avviso pioggia." width="800" height="600"></div>
@@ -159,13 +163,24 @@ footer p{margin:0 0 10px}
   <p>Il display si sveglia agli orari che scegli, oppure quando premi un tasto. Chiede al server la pagina del momento e la ridisegna solo se è cambiato qualcosa. Poi torna a dormire fino al risveglio successivo, che il server calcola per lui.</p>
 </div></section>
 
+<section id="buy"><div class="wrap">
+  <h2>Il display</h2>
+  <p>Zaino funziona sullo ZECTRIX NOTE4C Devkit: un pannello e-paper da 4,2″ a quattro colori con ESP32-S3 e batteria da 2000 mAh. Il NOTE4 in bianco e nero non è compatibile.</p>
+  <div class="buy">
+    <b style="font:700 22px/1.2 'Barlow Condensed',sans-serif">Il 3% di sconto sul NOTE4C</b>
+    <div class="row"><a class="btn" href="https://shop.zectrixlab.com/ZAINO">Compra sullo shop ZECTRIX</a><span>oppure usa il codice <span class="code">ZAINO</span></span></div>
+    <small>3% di sconto su tutto l'ordine, acquisto minimo 30 USD, un solo utilizzo per cliente.</small>
+    <small>È un link di affiliazione: se compri da qui, ZECTRIX mi riconosce una commissione del 5% e tu paghi di meno, non di più. Mi aiuta a continuare a sviluppare Zaino.</small>
+  </div>
+</div></section>
+
 <section id="install"><div class="wrap">
   <h2>Installazione</h2>
   <p>Servono uno ZECTRIX NOTE4C Devkit, un computer di casa sempre acceso con Docker (un NAS, un mini PC, un Raspberry Pi) e una rete Wi-Fi a 2,4 GHz.</p>
   <ol class="steps"><li><b>Avvia il server</b><pre><code>git clone https://github.com/filippocobelli/zaino.git
 cd zaino/server
 docker compose up -d --build</code></pre>Poi apri <code>http://IP-DEL-SERVER:3021/admin</code>.</li><li><b>Configura</b>Dalla web app: località del meteo, materie, orario, mensa, calendari e programma della giornata.</li><li><b>Fai il backup del display</b>Prima copia la memoria del NOTE4C. È l'unico modo per tornare al software di fabbrica.</li><li><b>Installa il firmware</b>Collega il display al Wi-Fi con il firmware di riferimento ZECTRIX, compila Zaino con l'indirizzo del tuo server (<code>./build.sh http://192.168.1.50:3021</code>, serve solo Docker) e installalo con il firmware updater ZECTRIX, mantenendo le impostazioni.</li></ol>
-  <p>La guida completa è in <a href="https://github.com/filippocobelli/zaino/blob/main/docs/installazione.md">docs/installazione.md</a>. Non hai ancora un NOTE4C? <a href="https://zectrix.com/en/note4c.html">Lo produce ZECTRIX</a>.</p>
+  <p>La guida completa è in <a href="https://github.com/filippocobelli/zaino/blob/main/docs/installazione.md">docs/installazione.md</a>. Non hai ancora un NOTE4C? <a href="#buy">Ecco dove trovarlo</a>.</p>
   <h3>Cosa è stato provato, e cosa no</h3>
   <dl class="facts"><div><dt>Display</dt><dd>Solo il NOTE4C Devkit con il pannello a quattro colori. Il NOTE4 in bianco e nero non è compatibile.</dd></div><div><dt>Provato</dt><dd>Su un NOTE4C di casa, con il server in Docker su un mini PC Proxmox.</dd></div><div><dt>Batteria</dt><dd>Non ancora misurata. Il display dorme tra un aggiornamento e l'altro e ridisegna solo quando cambia qualcosa.</dd></div><div><dt>Wi-Fi</dt><dd>Il firmware usa la rete salvata dal firmware di riferimento ZECTRIX. Non sa ancora configurare il Wi-Fi da solo.</dd></div></dl>
 </div></section>
