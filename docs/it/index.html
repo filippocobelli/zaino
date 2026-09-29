@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Zaino · dashboard scolastica su e-paper per ZECTRIX NOTE4C</title>
+<meta name="description" content="Dashboard scolastica open source per lo ZECTRIX NOTE4C a quattro colori: il programma di oggi, l&#x27;orario con i colori della maestra, lo zaino per domani e la mensa.">
+<meta property="og:title" content="Zaino · dashboard scolastica su e-paper per ZECTRIX NOTE4C">
+<meta property="og:description" content="Dashboard scolastica open source per lo ZECTRIX NOTE4C a quattro colori: il programma di oggi, l&#x27;orario con i colori della maestra, lo zaino per domani e la mensa.">
+<meta property="og:image" content="https://filippocobelli.github.io/zaino/screenshots/copertina.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="alternate" hreflang="en" href="../">
+<style>
+@font-face{font-family:"Barlow";src:url(../fonts/Barlow-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Barlow";src:url(../fonts/Barlow-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Barlow Condensed";src:url(../fonts/BarlowCondensed-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+
+:root{--paper:#FAFAF7;--ink:#1C1C1C;--soft:#55575E;--line:#E2E1DB;--red:#C42424;--yellow:#F2C400;--grid:#DCE1EA;--note:#F1F0EA}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 18px/1.62 "Barlow",system-ui,sans-serif}
+a{color:var(--ink);text-decoration-color:var(--red);text-underline-offset:3px;text-decoration-thickness:2px}
+a:hover{color:var(--red)}
+a:focus-visible,button:focus-visible{outline:3px solid var(--red);outline-offset:3px}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:720px;margin:0 auto;padding:0 22px}
+.wide{max-width:1000px;margin:0 auto;padding:0 22px}
+header.top{border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;gap:18px;height:58px;max-width:1000px}
+.brand{font:700 24px/1 "Barlow Condensed",sans-serif;text-decoration:none;display:flex;align-items:center;gap:8px;margin-right:auto}
+.inks{display:inline-flex;gap:2px}.inks i{width:7px;height:14px;display:block}
+header nav{display:flex;gap:16px;font-size:15px}
+header nav a{text-decoration:none;color:var(--soft)}header nav a:hover{color:var(--ink)}
+@media(max-width:620px){header nav .opt{display:none}}
+.hero{background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:24px 24px;border-bottom:1px solid var(--line)}
+.hero .wide{display:grid;grid-template-columns:1.05fr 1fr;gap:44px;align-items:center;padding-top:64px;padding-bottom:64px}
+@media(max-width:860px){.hero .wide{grid-template-columns:1fr;gap:34px;padding-top:40px;padding-bottom:44px}}
+.release{font-size:15px;color:var(--soft);margin:0 0 14px}
+.release b{color:var(--ink);font-weight:600}
+h1{font:700 clamp(46px,7.4vw,78px)/.95 "Barlow Condensed",sans-serif;margin:0 0 20px;letter-spacing:-.5px}
+.lead{font-size:20px;margin:0 0 26px;max-width:32em}
+.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.btn{display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;font:600 17px/1 "Barlow",sans-serif;padding:14px 20px;border-radius:6px}
+.btn:hover{background:var(--red);color:var(--paper)}
+.btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink)}
+.btn.alt:hover{box-shadow:inset 0 0 0 2px var(--red);color:var(--red)}
+.device{background:#FBFBF8;border:1px solid #DDDCD6;border-radius:34px;padding:26px 26px 22px;box-shadow:0 18px 40px -22px rgba(28,28,28,.45)}
+.device .screen{border:7px solid var(--ink);border-radius:10px;overflow:hidden;background:#fff}
+.device .screen img{width:100%}
+.device .base{display:flex;align-items:center;justify-content:space-between;margin-top:18px}
+.speaker{display:grid;grid-template-columns:repeat(7,6px);gap:6px}.speaker i{width:5px;height:5px;border-radius:50%;background:#444}
+.knob{display:flex;align-items:center;gap:16px}.knob i{width:5px;height:5px;border-radius:50%;background:#444}.knob b{width:40px;height:40px;border-radius:50%;border:2px solid #CFCEC8;background:#F6F6F2}
+.hero figcaption{font-size:14px;color:var(--soft);margin-top:12px;text-align:center}
+section{padding:66px 0 8px}
+h2{font:700 clamp(32px,4.6vw,44px)/1.02 "Barlow Condensed",sans-serif;margin:0 0 16px}
+h3{font:700 23px/1.15 "Barlow Condensed",sans-serif;margin:30px 0 6px}
+p{margin:0 0 16px}
+.muted{color:var(--soft)}
+figure{margin:28px 0}
+figure img{border-radius:10px;border:1px solid var(--line)}
+figcaption{font-size:14px;color:var(--soft);margin-top:9px}
+.pages{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 18px;margin:28px 0}
+@media(max-width:720px){.pages{grid-template-columns:repeat(2,1fr)}}
+.pages figure{margin:0}.pages img{border-radius:6px;border:5px solid var(--ink)}
+.pages b{display:block;font:700 19px/1.2 "Barlow Condensed",sans-serif;margin-top:9px;color:var(--ink)}
+.pages span{font-size:15px;color:var(--soft);line-height:1.45;display:block}
+.day{list-style:none;padding:0;margin:22px 0;border-top:1px solid var(--line)}
+.day li{display:grid;grid-template-columns:130px 1fr;gap:18px;padding:14px 0;border-bottom:1px solid var(--line)}
+.day li b{font:700 20px/1.3 "Barlow Condensed",sans-serif}
+@media(max-width:520px){.day li{grid-template-columns:1fr;gap:2px}}
+.swatches{display:flex;flex-wrap:wrap;gap:10px 20px;margin:18px 0 6px;font-size:16px}
+.swatches span{display:flex;align-items:center;gap:8px}.swatches i{width:22px;height:22px;border:1.5px solid var(--ink);display:block}
+.hatch{background:repeating-linear-gradient(45deg,var(--ink) 0 2px,#fff 2px 5px)}
+.dots{background:radial-gradient(var(--ink) 1.2px,#fff 1.4px) 0 0/5px 5px}
+.rstripe{background:repeating-linear-gradient(45deg,var(--red) 0 2px,#fff 2px 5px)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:24px 0}
+ol.steps>li{counter-increment:s;position:relative;padding:0 0 22px 56px}
+ol.steps>li::before{content:counter(s);position:absolute;left:0;top:-2px;width:38px;height:38px;border-radius:50%;background:var(--ink);color:var(--paper);font:700 20px/38px "Barlow Condensed",sans-serif;text-align:center}
+ol.steps b{display:block;font:700 21px/1.25 "Barlow Condensed",sans-serif;margin-bottom:2px}
+pre{background:var(--note);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font:14.5px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:10px 0 4px}
+code{font:0.88em ui-monospace,Menlo,Consolas,monospace;background:var(--note);padding:1px 5px;border-radius:4px}
+pre code{background:none;padding:0}
+dl.facts{margin:22px 0;border-top:1px solid var(--line)}
+dl.facts div{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}
+dl.facts dt{font:700 19px/1.35 "Barlow Condensed",sans-serif}dl.facts dd{margin:0}
+@media(max-width:520px){dl.facts div{grid-template-columns:1fr;gap:2px}}
+.flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:10px;margin:24px 0;text-align:center;font-size:15px}
+.flow div{border:2px solid var(--ink);border-radius:10px;padding:12px 8px;background:#fff}
+.flow div b{display:block;font:700 19px/1.2 "Barlow Condensed",sans-serif}
+.flow .arrow{color:var(--soft);font-size:22px}
+@media(max-width:620px){.flow{grid-template-columns:1fr}.flow .arrow{transform:rotate(90deg)}}
+.note{background:var(--note);border-left:4px solid var(--yellow);padding:16px 20px;border-radius:0 8px 8px 0;margin:24px 0}
+.note p:last-child{margin:0}
+.support{border-top:1px solid var(--line);margin-top:66px;padding:44px 0}
+.support .wrap{display:flex;flex-wrap:wrap;gap:22px;align-items:center;justify-content:space-between}
+.support p{margin:0;max-width:34em}
+footer{background:var(--ink);color:#C9C8C2;font-size:15px;padding:34px 0 40px}
+footer a{color:#FAFAF7}
+footer p{margin:0 0 10px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <a class="brand" href="./"><span class="inks" aria-hidden="true"><i style="background:#C42424"></i><i style="background:#F2C400"></i><i style="background:#1C1C1C"></i></span>Zaino</a>
+  <nav aria-label="Sezioni">
+    <a class="opt" href="#pages">Pagine</a><a class="opt" href="#install">Installazione</a><a class="opt" href="#data">I tuoi dati</a>
+    <a href="https://github.com/filippocobelli/zaino">GitHub</a><a href="../" hreflang="en">English</a>
+  </nav>
+</div></header>
+<main>
+<div class="hero"><div class="wide">
+  <div>
+    <p class="release"><b>Versione 1.3</b>, libera e open source, per lo ZECTRIX NOTE4C: un display e-paper da 4,2″ nero, bianco, rosso e giallo.</p>
+    <h1>La giornata di scuola, appesa accanto alla porta.</h1>
+    <p class="lead">La mattina mostra gli impegni, il meteo e cosa c'è in mensa. Il pomeriggio l'orario con i colori della maestra. La sera prima di scuola cosa mettere nello zaino, e l'avviso di prendere l'ombrello se pioverà.</p>
+    <div class="actions"><a class="btn" href="#install">Come installarlo</a><a class="btn alt" href="https://github.com/filippocobelli/zaino">Codice su GitHub</a></div>
+  </div>
+  <figure style="margin:0">
+    <div class="device"><div class="screen"><img src="../screenshots/schermo-zaino.png" alt="La pagina Zaino sul display: italiano, matematica, religione, motoria e arte con il materiale, una verifica, i compiti e l&#x27;avviso pioggia." width="800" height="600"></div>
+      <div class="base" aria-hidden="true"><div class="speaker"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="knob"><i></i><b></b></div></div></div>
+    <figcaption>La pagina Zaino, disegnata dal server con dati di esempio.</figcaption>
+  </figure>
+</div></div>
+
+<section><div class="wrap">
+  <h2>Che cos'è</h2>
+  <p>Zaino è un software libero che trasforma un piccolo display e-paper in una dashboard scolastica per tuo figlio. La carta elettronica tiene l'immagine anche senza corrente, quindi lo schermo è sempre lì, come un orologio, e la batteria dura.</p><p>Un piccolo server in casa disegna le pagine. Il display si sveglia, scarica la pagina che serve e torna a dormire. Si configura tutto una volta sola, dal telefono.</p>
+  <ul class="day"><li><b>Mattina</b><span>Oggi: impegni, meteo e mensa.</span></li><li><b>Pomeriggio</b><span>Settimana: l'orario, con i prossimi appuntamenti.</span></li><li><b>Sera prima di scuola</b><span>Zaino: libri, compiti, verifiche, avviso pioggia.</span></li><li><b>Quando vuoi</b><span>Il tasto frontale scorre le altre pagine.</span></li></ul>
+</div></section>
+
+<section id="pages"><div class="wrap">
+  <h2>Sei pagine, quella giusta al momento giusto</h2>
+  <p>Scegli tu quale pagina mostrare in ogni momento della giornata e in quali giorni. Il tasto frontale scorre le altre.</p>
+  <div class="pages"><figure><img src="../screenshots/schermo-home.png" alt="La pagina Oggi" width="800" height="600" loading="lazy"><b>Oggi</b><span>Impegni, meteo, mensa e un consiglio per domani.</span></figure><figure><img src="../screenshots/schermo-settimana.png" alt="La pagina Settimana" width="800" height="600" loading="lazy"><b>Settimana</b><span>L'orario come quello in classe.</span></figure><figure><img src="../screenshots/schermo-zaino.png" alt="La pagina Zaino" width="800" height="600" loading="lazy"><b>Zaino</b><span>Materiale, compiti e verifiche.</span></figure><figure><img src="../screenshots/schermo-mensa.png" alt="La pagina Mensa" width="800" height="600" loading="lazy"><b>Mensa</b><span>Il menù a rotazione della scuola.</span></figure><figure><img src="../screenshots/schermo-meteo.png" alt="La pagina Meteo" width="800" height="600" loading="lazy"><b>Meteo</b><span>Oggi e i tre giorni successivi.</span></figure><figure><img src="../screenshots/schermo-riposo.png" alt="La pagina Riposo con un&#x27;immagine" width="800" height="600" loading="lazy"><b>Riposo</b><span>Una tua immagine, di notte.</span></figure></div>
+  <p class="muted" style="font-size:15px">Tutte le schermate sono di 400 × 300 pixel, mostrate al doppio, con dati di esempio.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>I colori che il pannello non ha</h2>
+  <p>I bambini riconoscono le materie dal colore: matematica è blu, arte è rosa. Il pannello ha solo quattro pigmenti, e Zaino si arrangia. Rosso, giallo e nero sono esatti. Arancione, rosa e grigio si ottengono mescolando puntini. Blu, verde e viola diventano righe e puntini, con il nome del colore scritto accanto.</p>
+  <div class="swatches"><span><i class="" style="background:#C42424"></i>rosso</span><span><i class="" style="background:#F2C400"></i>giallo</span><span><i class="" style="background:#1C1C1C"></i>nero</span><span><i class="hatch" style=""></i>blu, a righe</span><span><i class="dots" style=""></i>verde, a puntini</span><span><i class="rstripe" style=""></i>viola, a righe rosse</span></div>
+  <figure><img src="../screenshots/colori.png" alt="La pagina Oggi con l&#x27;accento rosso, nero e giallo." width="1600" height="900" loading="lazy"><figcaption>Con più figli, a ogni display il suo colore d'accento.</figcaption></figure>
+</div></section>
+
+<section id="phone"><div class="wrap">
+  <h2>Si configura dal telefono, una volta sola</h2>
+  <p>Una web app sulla rete di casa contiene tutto: le materie e i loro colori, l'orario, cosa portare ogni giorno, il diario con compiti e verifiche, la mensa, i calendari di sport e famiglia, e quale pagina mostrare quando. Aggiungila alla schermata Home e si comporta come un'app.</p>
+  <figure><img src="../screenshots/web-app.png" alt="La web app sul telefono, con il programma della giornata." width="1600" height="900" loading="lazy"><figcaption>Il programma della giornata nella web app.</figcaption></figure>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Come funziona</h2>
+  <div class="flow" role="img" aria-label="La web app manda le impostazioni al server; il display scarica la pagina dal server.">
+    <div><b>Il telefono</b>la web app</div><span class="arrow" aria-hidden="true">⟶</span>
+    <div><b>Server Zaino</b>Docker, in casa</div><span class="arrow" aria-hidden="true">⟶</span>
+    <div><b>NOTE4C</b>si sveglia, disegna, dorme</div>
+  </div>
+  <p>Il display si sveglia agli orari che scegli, oppure quando premi un tasto. Chiede al server la pagina del momento e la ridisegna solo se è cambiato qualcosa. Poi torna a dormire fino al risveglio successivo, che il server calcola per lui.</p>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <h2>Installazione</h2>
+  <p>Servono uno ZECTRIX NOTE4C Devkit, un computer di casa sempre acceso con Docker (un NAS, un mini PC, un Raspberry Pi) e una rete Wi-Fi a 2,4 GHz.</p>
+  <ol class="steps"><li><b>Avvia il server</b><pre><code>git clone https://github.com/filippocobelli/zaino.git
+cd zaino/server
+docker compose up -d --build</code></pre>Poi apri <code>http://IP-DEL-SERVER:3021/admin</code>.</li><li><b>Configura</b>Dalla web app: località del meteo, materie, orario, mensa, calendari e programma della giornata.</li><li><b>Fai il backup del display</b>Prima copia la memoria del NOTE4C. È l'unico modo per tornare al software di fabbrica.</li><li><b>Installa il firmware</b>Collega il display al Wi-Fi con il firmware di riferimento ZECTRIX, compila Zaino con l'indirizzo del tuo server (<code>./build.sh http://192.168.1.50:3021</code>, serve solo Docker) e installalo con il firmware updater ZECTRIX, mantenendo le impostazioni.</li></ol>
+  <p>La guida completa è in <a href="https://github.com/filippocobelli/zaino/blob/main/docs/installazione.md">docs/installazione.md</a>. Non hai ancora un NOTE4C? <a href="https://zectrix.com/en/note4c.html">Lo produce ZECTRIX</a>.</p>
+  <h3>Cosa è stato provato, e cosa no</h3>
+  <dl class="facts"><div><dt>Display</dt><dd>Solo il NOTE4C Devkit con il pannello a quattro colori. Il NOTE4 in bianco e nero non è compatibile.</dd></div><div><dt>Provato</dt><dd>Su un NOTE4C di casa, con il server in Docker su un mini PC Proxmox.</dd></div><div><dt>Batteria</dt><dd>Non ancora misurata. Il display dorme tra un aggiornamento e l'altro e ridisegna solo quando cambia qualcosa.</dd></div><div><dt>Wi-Fi</dt><dd>Il firmware usa la rete salvata dal firmware di riferimento ZECTRIX. Non sa ancora configurare il Wi-Fi da solo.</dd></div></dl>
+</div></section>
+
+<section id="data"><div class="wrap">
+  <h2>I tuoi dati</h2>
+  <p>Orario, nomi, diario e menù restano sul tuo server, in un solo file.</p>
+  <dl class="facts"><div><dt>Open-Meteo</dt><dd>La località salvata, per il meteo.</dd></div><div><dt>I tuoi calendari</dt><dd>Solo i link iCal che aggiungi tu.</dd></div><div><dt>La web app</dt><dd>Non ha login: tienila sulla rete di casa o dietro una VPN, mai aperta su internet.</dd></div></dl>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Come è nato</h2>
+  <p>In tutta onestà: non sono un programmatore. Ho tante idee e poche competenze di programmazione, quindi Zaino l'ho realizzato con Claude, l'intelligenza artificiale di Anthropic. Io ho deciso cosa doveva fare e come doveva essere, e l'ho provato sul display vero e con mio figlio. Ci sono voluti parecchi tentativi ed errori prima che tutto funzionasse.</p><p>Se conosci ESP-IDF, FastAPI o l'e-paper meglio di me, <a href="https://github.com/filippocobelli/zaino/issues">segnalazioni e pull request</a> sono benvenute.</p>
+  <div class="note"><p><b>Prossimo passo:</b> una versione stand-alone che gira tutta nel display, senza server e senza Docker, configurata dal telefono tramite il Wi-Fi del display stesso.</p></div>
+</div></section>
+</main>
+
+<div class="support"><div class="wrap">
+  <p>Zaino è libero e open source. Se ti è utile, un caffè aiuta a costruire la versione stand-alone.</p>
+  <a class="btn" href="https://ko-fi.com/filippocobelli">Offrimi un caffè su Ko-fi</a>
+</div></div>
+
+<footer><div class="wrap">
+  <p>Zaino 1.3 è software libero con licenza <a href="https://github.com/filippocobelli/zaino/blob/main/LICENSE">GNU GPL v3.0 o successiva</a>.</p><p>Meteo da <a href="https://open-meteo.com/">Open-Meteo.com</a> (CC BY 4.0). Carattere: Barlow Condensed, lo stesso usato dal display. Sequenza di pilotaggio del pannello dal firmware di riferimento NOTE4C (MIT).</p><p>ZECTRIX e NOTE4C possono essere marchi dei rispettivi proprietari. Zaino è un progetto indipendente, non realizzato né sponsorizzato da ZECTRIX.</p>
+</div></footer>
+</body>
+</html>
