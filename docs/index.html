@@ -80,6 +80,7 @@ ol.steps b{display:block;font:700 21px/1.25 "Barlow Condensed",sans-serif;margin
 pre{background:var(--note);border:1px solid var(--line);border-radius:8px;padding:14px 16px;overflow-x:auto;font:14.5px/1.5 ui-monospace,Menlo,Consolas,monospace;margin:10px 0 4px}
 code{font:0.88em ui-monospace,Menlo,Consolas,monospace;background:var(--note);padding:1px 5px;border-radius:4px}
 pre code{background:none;padding:0}
+.disclaimer{font-size:.8rem;line-height:1.5;color:var(--soft);margin:0 0 18px}
 dl.facts{margin:22px 0;border-top:1px solid var(--line)}
 dl.facts div{display:grid;grid-template-columns:150px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--line)}
 dl.facts dt{font:700 19px/1.35 "Barlow Condensed",sans-serif}dl.facts dd{margin:0}
@@ -176,6 +177,7 @@ footer p{margin:0 0 10px}
 
 <section id="install"><div class="wrap">
   <h2>Install it</h2>
+  <p class="disclaimer">Use at your own risk. Firmware is provided as is, without warranty. I'm not liable for any damage to your device; unofficial firmware may void the manufacturer's warranty.</p>
   <p>You need a ZECTRIX NOTE4C Devkit, a computer at home that's always on and runs Docker (a NAS, a mini PC, a Raspberry Pi), and a 2.4 GHz Wi-Fi network.</p>
   <ol class="steps"><li><b>Start the server</b><pre><code>git clone https://github.com/filippocobelli/zaino.git
 cd zaino/server

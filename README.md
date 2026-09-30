@@ -76,6 +76,12 @@ flowchart LR
 
 ## Installation
 
+> **Use at your own risk.** Zaino's firmware is provided *as is*, without
+> warranty of any kind. Installing it is your choice and your responsibility:
+> I am not liable for data loss, malfunctions or damage to your device.
+> Back up your device before flashing. Installing unofficial firmware may
+> void the manufacturer's warranty.
+
 The full step-by-step guide is in [docs/installazione.md](docs/installazione.md) (in Italian for now). In short:
 
 ### 1. Server
@@ -147,4 +153,4 @@ Zaino is free and open source. If it's useful to you, you can buy me a coffee: i
 - Weather data from [Open-Meteo.com](https://open-meteo.com/) (CC BY 4.0). Open-Meteo's free API is for non-commercial use.
 - Code, documentation and images written with [Claude](https://claude.ai) by Anthropic (see [How it was built](#how-it-was-built)).
 
-Zaino is an independent project, not affiliated with ZECTRIX. The NOTE4C Devkit is development hardware: installing custom firmware is at your own risk, and it's always wise to keep a backup of the flash.
+Zaino is an independent project, not affiliated with ZECTRIX.
