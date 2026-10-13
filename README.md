@@ -123,7 +123,8 @@ Timetable, names, diary and menu stay on your server, in a JSON file. The server
 
 - The firmware doesn't have its own Wi-Fi setup yet: to change network you reinstall the reference firmware, configure it and reinstall Zaino.
 - The display's internal clock drifts by a few percent: that's why it sleeps at most one hour at a time and recalculates the times at every wake-up.
-- Planned: a **stand-alone** version that lives entirely on the display, with no server (setup from the display's hotspot, for people without a server at home), diary dictation, voice questions, over-the-air firmware updates.
+- No server at home? **Zaino for NOTE4C**, which runs entirely on the display, is a separate product at [zainoapp.it](https://www.zainoapp.it/) (from September 2027).
+- Planned here: diary dictation, voice questions.
 
 ## How it was built
 
@@ -141,7 +142,7 @@ Want Zaino in your language? Copy `server/app/lang/en.json`, translate it and op
 
 ## Support the project
 
-Zaino is free and open source. If it's useful to you, you can buy me a coffee: it helps build the stand-alone version, running entirely on the display with no server.
+Zaino is free and open source. If it's useful to you, you can buy me a coffee.
 
 [![Buy me a coffee on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/filippocobelli)
 

@@ -125,7 +125,8 @@ Orario, nomi, diario e menù restano nel tuo server, in un file JSON. Il server 
 
 - Il firmware non ha ancora una configurazione Wi-Fi propria: per cambiare rete si reinstalla il firmware di riferimento, si configura e si reinstalla Zaino.
 - L'orologio interno del display deriva di qualche punto percentuale: per questo dorme al massimo un'ora per volta e ricalcola gli orari a ogni risveglio.
-- In programma: una versione **stand-alone** che vive tutta nel display, senza server (configurazione dall'hotspot del display, pensata per chi non ha un server in casa), dettatura del diario, domande vocali, aggiornamenti firmware via Wi-Fi.
+- Niente server in casa? **Zaino per NOTE4C**, che gira tutto nel display, è un prodotto a parte su [zainoapp.it](https://www.zainoapp.it/) (da settembre 2027).
+- In programma qui: dettatura del diario, domande vocali.
 
 ## Come è nato
 
@@ -143,7 +144,7 @@ Vuoi Zaino nella tua lingua? Copia `server/app/lang/en.json`, traducilo e apri u
 
 ## Sostieni il progetto
 
-Zaino è gratuito e open source. Se ti è utile puoi offrirmi un caffè: aiuta a portare avanti la versione stand-alone, tutta nel display, senza server.
+Zaino è gratuito e open source. Se ti è utile puoi offrirmi un caffè.
 
 [![Offrimi un caffè su Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/filippocobelli)
 
