@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.4
+
+- Mensa: **importa il menù da un file**. Il PDF che manda la scuola si legge in locale (tabella con i giorni da lunedì a venerdì, più settimane); foto, screenshot e PDF scansionati con l'API di Anthropic, solo se è impostata `ZAINO_AI_KEY`. I campi si compilano e si controllano prima di salvare. Pulizia dei piatti: asterischi, virgolette ed etichette («Primo:») tolti, varianti *Infanzia/Primaria* scelte dalla web app, «P.U.» diventa «(piatto unico)».
+- Mensa: **archivio dei menù** con un nome (es. «estate»), da ripristinare o eliminare.
+- Numero di versione esposto in `/health` e `/api/config`.
+- Nuova dipendenza: `pdfplumber`.
+
 ## 1.3 — prima versione pubblica
 
 - Licenza GNU GPL v3.0 o successiva; avvisi delle licenze di terze parti in `THIRD_PARTY_NOTICES.md`.

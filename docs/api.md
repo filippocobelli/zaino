@@ -29,6 +29,9 @@ Programma di default: 6–13 Oggi (giorni di scuola), 13–18 Settimana (giorni 
 | `GET /api/lang` | Testi della web app nella lingua scelta ed elenco delle lingue disponibili |
 | `GET /api/config` | Configurazione completa, stili e colori d'accento disponibili, stato del device |
 | `PUT /api/{settings,subjects,timetable,extras,diary,calendars,mensa}` | Sostituisce una sezione (`settings` viene unita a quella esistente; `accent` = `rosso`, `nero` o `giallo`; `lang` = codice di un file in `server/app/lang/`) |
+| `POST /api/mensa/import` | Legge un menù da PDF o immagine (multipart: `file`, `grade` = `primaria`, `infanzia` o `secondaria`) e restituisce `{title, weeks, source}` senza salvarlo; `source` = `pdf` (tabella letta in locale) o `ai` (Anthropic, solo con `ZAINO_AI_KEY`) |
+| `POST /api/mensa/archive` | Archivia un menù: `{"name": "estate", "mensa": {…}}` (senza `mensa` archivia quello salvato); un nome già usato viene sostituito |
+| `POST /api/mensa/archive/{id}/restore` · `DELETE /api/mensa/archive/{id}` | Rimette in uso un menù archiviato (la settimana in corso va riscelta) o lo elimina |
 | `GET /api/geocode?q=Bologna` | Ricerca località per il meteo |
 | `GET /api/suggest?color=%231E63C6` | Stile e-paper più vicino a un colore |
 | `GET /api/swatch/{stile}.png` | Campione dello stile |

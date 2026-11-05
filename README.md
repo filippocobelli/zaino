@@ -19,7 +19,7 @@ It runs on the [ZECTRIX NOTE4C Devkit](https://zectrix.com/en/note4c.html), a 4.
 - **Daily schedule**: pick which page to show in each time slot and on which days (school days, the evening before school, days without school). By default: *Today* in the morning, *Week* in the afternoon, *Backpack* the evening before school, a rest image at night.
 - **Backpack**: the day's subjects, what to bring for each, fixed extras (e.g. PE kit on Tuesdays), homework and tests from the diary, the weather and an *umbrella or raincoat* warning.
 - **Weekly timetable** like the one on the classroom wall: lessons in rows, days in columns, repeated lessons merged, each subject with its coloured line and upcoming events at the bottom.
-- **School lunch**: the school's rotating menu (e.g. 6 weeks), with today's lunch on the Today page and a page with the whole week.
+- **School lunch**: the school's rotating menu (e.g. 6 weeks), with today's lunch on the Today page and a page with the whole week. Import it from the school's PDF (or from a photo, with an API key) and archive it by season, e.g. "summer" and "winter".
 - **Subject colours**: red, yellow and black are exact; orange, pink, grey, burgundy and olive are dithered; blue, green and purple, which the panel can't show, become stripes and dots with the colour name written next to them (optional).
 - **Weather** with a 3-day forecast and practical tips: umbrella, warm coat, water bottle.
 - **iCal calendars** (sports, activities, family) on the Today page and under the timetable.

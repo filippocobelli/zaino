@@ -149,6 +149,23 @@ button.x{border:0;background:none;color:var(--red);font:700 22px var(--cond);cur
     </div>
     <p class="meta" id="mInfo"></p>
   </div>
+  <div class="sheet">
+    <h3 data-i="mensa.import_title"></h3>
+    <p class="meta" data-i="mensa.import_intro"></p>
+    <label for="mFile" data-i="mensa.import_file"></label><input type="file" id="mFile" accept="application/pdf,.pdf,image/*">
+    <label for="mGrade" data-i="mensa.import_grade"></label>
+    <select id="mGrade"><option value="primaria" data-i="mensa.grades.primaria"></option><option value="infanzia" data-i="mensa.grades.infanzia"></option><option value="secondaria" data-i="mensa.grades.secondaria"></option></select>
+    <p class="meta" id="mAiNote"></p>
+    <p class="meta" id="mImportInfo" role="status" aria-live="polite"></p>
+    <div class="bar"><button class="act" id="mImportBtn" onclick="importMensa()" data-i="mensa.import_go"></button></div>
+  </div>
+  <div class="sheet">
+    <h3 data-i="mensa.archive_title"></h3>
+    <p class="meta" data-i="mensa.archive_intro"></p>
+    <label for="mArchName" data-i="mensa.archive_name"></label><input type="text" id="mArchName" maxlength="40" data-ip="mensa.archive_name_ph">
+    <div class="bar"><button class="act alt" onclick="archiveMensa()" data-i="mensa.archive_save"></button></div>
+    <div id="mArchive"></div>
+  </div>
   <div id="mWeeks"></div>
   <div class="bar"><button class="act alt" onclick="mAddWeek()" data-i="mensa.add_week"></button><button class="act alt" onclick="mDelWeek()" data-i="mensa.remove_week"></button><button class="act" onclick="saveMensa()" data-i="mensa.save"></button></div>
 </section>
@@ -389,6 +406,52 @@ function drawMensa(){
   $("mInfo").textContent=M.week1?t("mensa.info",{n:M.weeks.length,date:new Date(M.week1+"T12:00").toLocaleDateString(LOC)}):t("mensa.info_missing");
   $("mWeeks").innerHTML=M.weeks.map((wk,i)=>`<div class="sheet"><h3>${esc(t("mensa.week_title",{n:i+1}))}${i===cur&&M.week1?esc(t("mensa.in_progress")):""}</h3>
     <div class="grid2">${day5.map((dn,j)=>`<div><label>${esc(dn)}</label><textarea oninput="C.mensa.weeks[${i}][${j}]=this.value.split('\\n')">${esc((wk[j]||[]).join("\n"))}</textarea></div>`).join("")}</div></div>`).join("");
+  drawArchive();
+}
+function drawArchive(){
+  const A=C.mensa_archive||[];
+  $("mAiNote").textContent=t(C.menu_ai?"mensa.import_ai_note":"mensa.import_ai_off");
+  $("mArchive").innerHTML=A.length?[...A].reverse().map(x=>`<div class="entry">
+    <div class="grow"><strong>${esc(x.name)}</strong>${x.mensa.title?" · "+esc(x.mensa.title):""}<br><span class="meta">${esc(t("mensa.archive_weeks",{n:x.mensa.weeks.length,date:x.saved}))}</span></div>
+    <button class="act alt" onclick="restoreMensa('${x.id}')">${esc(t("mensa.archive_restore"))}</button>
+    <button class="x" aria-label="${esc(t("mensa.archive_delete_aria",{name:x.name}))}" onclick="delArchive('${x.id}')">×</button></div>`).join("")
+    :`<p class="meta">${esc(t("mensa.archive_empty"))}</p>`;
+}
+function mHasDishes(){return (C.mensa.weeks||[]).some(w=>w.some(d=>(d||[]).some(x=>String(x).trim())))}
+async function importMensa(){
+  const f=$("mFile").files[0];if(!f){toast(t("mensa.import_choose"));return}
+  if(mHasDishes()&&!confirm(t("mensa.import_confirm")))return;
+  const b=$("mImportBtn"),info=$("mImportInfo");
+  b.disabled=true;b.textContent=t("mensa.import_busy");info.textContent="";
+  try{
+    const fd=new FormData();fd.append("file",f);fd.append("grade",$("mGrade").value);
+    const r=await fetch("/api/mensa/import",{method:"POST",body:fd}).catch(e=>e);
+    if(r instanceof Error){info.textContent=t("error",{msg:r.message});return}
+    const j=await r.json().catch(()=>({}));
+    if(!r.ok){info.textContent=j.detail||t("error",{msg:r.status});return}
+    C.mensa.weeks=j.weeks;if(j.title)C.mensa.title=j.title;C.mensa.week1="";
+    drawMensa();
+    $("mImportInfo").textContent=t("mensa.import_done_info",{file:f.name,n:j.weeks.length});
+    toast(t("mensa.import_done",{n:j.weeks.length}));$("mFile").value="";
+  }finally{b.disabled=false;b.textContent=t("mensa.import_go")}
+}
+async function archiveMensa(){
+  const name=$("mArchName").value.trim();if(!name){$("mArchName").focus();toast(t("mensa.archive_name_ph"));return}
+  if((C.mensa_archive||[]).some(x=>x.name.toLowerCase()===name.toLowerCase())&&!confirm(t("mensa.archive_confirm_replace",{name})))return;
+  C.mensa.title=$("mTitle").value.trim();
+  const r=await api("/api/mensa/archive","POST",{name,mensa:C.mensa});
+  C.mensa_archive=r.archive;$("mArchName").value="";drawArchive();toast(t("mensa.archived"));
+}
+async function restoreMensa(id){
+  const x=(C.mensa_archive||[]).find(a=>a.id===id);if(!x)return;
+  if(!confirm(t("mensa.archive_confirm_restore",{name:x.name})))return;
+  const r=await api(`/api/mensa/archive/${id}/restore`,"POST");
+  C.mensa=r.mensa;drawMensa();toast(t("mensa.restored"));
+}
+async function delArchive(id){
+  const x=(C.mensa_archive||[]).find(a=>a.id===id);if(!x||!confirm(t("mensa.archive_confirm_delete",{name:x.name})))return;
+  const r=await api(`/api/mensa/archive/${id}`,"DELETE");
+  C.mensa_archive=r.archive;drawArchive();toast(t("mensa.archive_deleted"));
 }
 function mAddWeek(){C.mensa.weeks.push([[],[],[],[],[]]);drawMensa()}
 function mDelWeek(){if(C.mensa.weeks.length>1&&confirm(t("mensa.confirm_remove"))){C.mensa.weeks.pop();drawMensa()}}
