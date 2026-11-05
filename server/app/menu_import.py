@@ -4,8 +4,9 @@
 - PDF con testo (come quelli che le ditte di ristorazione mandano alle scuole): la
   tabella si legge in locale con pdfplumber, senza servizi esterni.
 - Foto, screenshot e PDF scansionati: servono un modello che legga le immagini.
-  Si usa l'API di Anthropic solo se il container ha la variabile ZAINO_AI_KEY
-  (o ANTHROPIC_API_KEY). Il file del menù viene inviato ad Anthropic; il menù
+  Si usa l'API di Anthropic solo se c'è una chiave: quella salvata (cifrata) dalla
+  web app in Impostazioni, oppure la variabile ZAINO_AI_KEY (o ANTHROPIC_API_KEY).
+  Il file del menù viene inviato ad Anthropic; il menù
   non contiene dati personali.
 
 Il risultato ha la stessa forma di cfg["mensa"]["weeks"]:
@@ -19,7 +20,9 @@ import re
 
 import httpx
 
-AI_KEY = os.environ.get("ZAINO_AI_KEY") or os.environ.get("ANTHROPIC_API_KEY") or ""
+import vault
+
+ENV_KEY = os.environ.get("ZAINO_AI_KEY") or os.environ.get("ANTHROPIC_API_KEY") or ""
 AI_MODEL = os.environ.get("ZAINO_AI_MODEL", "claude-sonnet-5-5")
 AI_URL = "https://api.anthropic.com/v1/messages"
 
@@ -35,8 +38,31 @@ class MenuError(Exception):
         self.key, self.kw = key, kw
 
 
+def ai_key():
+    """Chiave in uso: prima quella salvata dalla web app, poi la variabile d'ambiente."""
+    return vault.get("ai_key") or ENV_KEY
+
+
+def ai_key_source():
+    if vault.get("ai_key"):
+        return "saved"
+    return "env" if ENV_KEY else ""
+
+
 def ai_available():
-    return bool(AI_KEY)
+    return bool(ai_key())
+
+
+def check_key(key):
+    """True se Anthropic accetta la chiave, False se la rifiuta, None se non si riesce a sentirlo."""
+    try:
+        r = httpx.get("https://api.anthropic.com/v1/models", timeout=15,
+                      headers={"x-api-key": key, "anthropic-version": "2023-06-01"})
+    except httpx.HTTPError:
+        return None
+    if r.status_code in (401, 403):
+        return False
+    return True if r.status_code == 200 else None
 
 
 # ---------------------------------------------------------------- pulizia dei piatti
@@ -209,13 +235,14 @@ def _image_for_ai(raw):
 
 
 def _ask_ai(block, grade):
-    if not AI_KEY:
+    key = ai_key()
+    if not key:
         raise MenuError("menu_ai_missing")
     body = {"model": AI_MODEL, "max_tokens": 8000,
             "messages": [{"role": "user", "content": [block, {"type": "text", "text": PROMPT.replace("{grade}", grade)}]}]}
     try:
         r = httpx.post(AI_URL, json=body, timeout=120, headers={
-            "x-api-key": AI_KEY, "anthropic-version": "2023-06-01", "content-type": "application/json"})
+            "x-api-key": key, "anthropic-version": "2023-06-01", "content-type": "application/json"})
     except httpx.HTTPError as ex:
         raise MenuError("menu_ai_error", error=ex)
     if r.status_code != 200:
@@ -259,7 +286,7 @@ def read_menu(raw, filename="", grade="primaria"):
             raise MenuError("menu_pdf_unreadable", error=ex)
         weeks = _normalize(weeks, grade)
         if not weeks:  # PDF scansionato o senza tabella: prova con l'AI
-            if not AI_KEY:
+            if not ai_available():
                 raise MenuError("menu_pdf_no_table")
             title, weeks = read_with_ai(raw, "pdf", grade)
             weeks, source = _normalize(weeks, grade), "ai"

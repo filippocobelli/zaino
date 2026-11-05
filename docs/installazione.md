@@ -72,11 +72,16 @@ La scheda **Schermo** mostra l'anteprima esatta di ogni pagina.
 
 ### Leggere i menù dalle foto (facoltativo)
 
-Per importare foto, screenshot o PDF scansionati, il server usa Claude tramite l'API di Anthropic. Serve una chiave (`sk-ant-…`, da console.anthropic.com), da aggiungere alle variabili d'ambiente del container:
+Per importare foto, screenshot o PDF scansionati, il server usa Claude tramite l'API di Anthropic. Serve una chiave (`sk-ant-…`, da console.anthropic.com):
+
+1. Apri **Impostazioni → Lettura dei menù dalle foto**, incolla la chiave e premi *Salva chiave*. Il server la prova con Anthropic e la salva cifrata in `data/secrets.enc`. Non compare in `config.json`, nelle esportazioni né nelle risposte delle API: la web app mostra solo le ultime 4 cifre.
+2. La chiave di cifratura è nel file `data/.zaino-master`, creato al primo salvataggio. Per tenerla fuori dalla cartella dati, imposta nel container una frase segreta qualsiasi: `ZAINO_SECRET=…`. Se cambi o togli `ZAINO_SECRET`, la chiave salvata non si legge più e va reinserita.
+3. In alternativa, la chiave si può mettere direttamente nelle variabili del container (`ZAINO_AI_KEY=sk-ant-...`). Se c'è anche una chiave salvata dalla web app, vale quella salvata.
 
 ```yaml
     environment:
-      - ZAINO_AI_KEY=sk-ant-...
+      # facoltativo: frase segreta per cifrare la chiave API
+      # - ZAINO_SECRET=una-frase-lunga-a-caso
       # facoltativo, il modello da usare (predefinito claude-sonnet-5-5)
       # - ZAINO_AI_MODEL=claude-sonnet-5-5
 ```

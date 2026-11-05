@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5
+
+- Impostazioni: **chiave API per leggere i menù dalle foto**, da incollare nella web app. Viene provata con Anthropic e salvata cifrata (Fernet) in `data/secrets.enc`, mai in `config.json`; la web app ne mostra solo le ultime 4 cifre. Chiave di cifratura in `data/.zaino-master` oppure dalla variabile `ZAINO_SECRET`. `ZAINO_AI_KEY` resta valida come alternativa.
+- Nuova dipendenza: `cryptography`.
+
 ## 1.4
 
 - Mensa: **importa il menù da un file**. Il PDF che manda la scuola si legge in locale (tabella con i giorni da lunedì a venerdì, più settimane); foto, screenshot e PDF scansionati con l'API di Anthropic, solo se è impostata `ZAINO_AI_KEY`. I campi si compilano e si controllano prima di salvare. Pulizia dei piatti: asterischi, virgolette ed etichette («Primo:») tolti, varianti *Infanzia/Primaria* scelte dalla web app, «P.U.» diventa «(piatto unico)».

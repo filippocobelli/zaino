@@ -12,11 +12,12 @@ import i18n
 import menu_import
 import render as RD
 import store
+import vault
 from styles import STYLES, THEMES, color_name, suggest_style
 
 from fastapi.staticfiles import StaticFiles
 
-app = FastAPI(title="Zaino", version="1.4")
+app = FastAPI(title="Zaino", version="1.5")
 STATIC = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 app.mount("/fonts", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "fonts")), name="fonts")
@@ -46,7 +47,7 @@ def admin():
     return FileResponse(os.path.join(STATIC, "admin.html"), headers={"Cache-Control": "no-store"})
 
 
-VERSION = "1.4"
+VERSION = "1.5"
 
 
 def msg(cfg, key, **kw):
@@ -76,6 +77,37 @@ def get_config():
         "menu_ai": menu_import.ai_available(),
         "version": VERSION,
     }
+
+
+def _ai_key_info():
+    """Stato della chiave API, senza mai restituirla: solo le ultime 4 cifre."""
+    key = menu_import.ai_key()
+    return {"set": bool(key), "source": menu_import.ai_key_source(), "end": key[-4:] if key else ""}
+
+
+@app.get("/api/ai-key")
+def api_ai_key():
+    return _ai_key_info()
+
+
+@app.put("/api/ai-key")
+async def api_ai_key_put(request: Request):
+    """Salva la chiave API cifrata nella cartella dati, dopo averla provata con Anthropic."""
+    cfg = store.load()
+    key = str((await request.json()).get("key", "")).strip()
+    if not key.startswith("sk-ant-") or len(key) < 20 or any(c.isspace() for c in key):
+        raise HTTPException(400, msg(cfg, "ai_key_format"))
+    ok = menu_import.check_key(key)
+    if ok is False:
+        raise HTTPException(400, msg(cfg, "ai_key_rejected"))
+    vault.put("ai_key", key)
+    return {**_ai_key_info(), "checked": ok is True}
+
+
+@app.delete("/api/ai-key")
+def api_ai_key_delete():
+    vault.put("ai_key", "")
+    return _ai_key_info()
 
 
 @app.put("/api/{section}")
