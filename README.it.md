@@ -17,7 +17,7 @@ Gira su [ZECTRIX NOTE4C Devkit](https://zectrix.com/en/note4c.html), un display 
 - **Programma della giornata**: scegli quale pagina mostrare in ogni fascia oraria e in quali giorni (giorni di scuola, sera prima di scuola, giorni senza scuola). Di default: la mattina *Oggi*, il pomeriggio *Settimana*, la sera prima di scuola *Zaino*, la notte un'immagine a riposo.
 - **Zaino del giorno**: materie in orario, materiale da portare per ciascuna, extra fissi (es. la tuta il martedì), compiti e verifiche dal diario, meteo del giorno e avviso *ombrello o impermeabile*.
 - **Orario settimanale** come quello appeso in classe: ore in righe, giorni in colonne, ore uguali unite, ogni materia con la sua linea colorata e, in basso, i prossimi appuntamenti.
-- **Mensa**: il menù a rotazione della scuola (per esempio 6 settimane), con il pranzo nella pagina di oggi e una pagina dedicata con tutta la settimana.
+- **Mensa**: il menù a rotazione della scuola (per esempio 6 settimane), con il pranzo nella pagina di oggi e una pagina dedicata con tutta la settimana. Si importa dal PDF della scuola (o da una foto, con una chiave API) e si archivia per stagione, per esempio «estate» e «inverno».
 - **Colori delle materie**: rosso, giallo e nero sono esatti; arancione, rosa, grigio, bordeaux e oliva si ottengono con il dithering; blu, verde e viola, che il pannello non può mostrare, diventano righe e puntini con il nome del colore scritto in piccolo accanto (disattivabile).
 - **Meteo** con previsioni a 3 giorni e consigli pratici: ombrello, giacca pesante, borraccia.
 - **Calendari iCal** (sport, attività, famiglia) nella pagina di oggi e sotto l'orario.

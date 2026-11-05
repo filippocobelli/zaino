@@ -9,6 +9,8 @@ services:
       - TZ=Europe/Rome
       # lingua di una nuova installazione (it, en…); poi si cambia dalla web app
       # - ZAINO_LANG=en
+      # leggere i menù della mensa da foto e screenshot (facoltativo, vedi docs/installazione.md)
+      # - ZAINO_AI_KEY=sk-ant-...
     volumes:
       - ./data:/data
     # Docker su Proxmox: se il log mostra "PermissionError ... socketpair", togli il commento:

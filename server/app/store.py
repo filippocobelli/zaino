@@ -91,6 +91,7 @@ def _seed():
         "diary": [],
         "calendars": [],
         "mensa": {"enabled": False, "title": seed["menu_title"], "week1": "", "weeks": [[[], [], [], [], []]]},
+        "mensa_archive": [],
     }
 
 
@@ -112,7 +113,7 @@ def load():
             cfg = json.load(f)
         # completa chiavi mancanti dopo aggiornamenti
         seed = None
-        for k in ("settings", "subjects", "timetable", "extras", "diary", "calendars", "riposo_images", "mensa"):
+        for k in ("settings", "subjects", "timetable", "extras", "diary", "calendars", "riposo_images", "mensa", "mensa_archive"):
             if k not in cfg:
                 seed = seed or _seed()
                 cfg[k] = seed[k]

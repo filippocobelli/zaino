@@ -9,13 +9,14 @@ from fastapi.responses import FileResponse, JSONResponse, RedirectResponse, Resp
 
 import data as D
 import i18n
+import menu_import
 import render as RD
 import store
 from styles import STYLES, THEMES, color_name, suggest_style
 
 from fastapi.staticfiles import StaticFiles
 
-app = FastAPI(title="Zaino")
+app = FastAPI(title="Zaino", version="1.4")
 STATIC = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=STATIC), name="static")
 app.mount("/fonts", StaticFiles(directory=os.path.join(os.path.dirname(__file__), "fonts")), name="fonts")
@@ -45,6 +46,9 @@ def admin():
     return FileResponse(os.path.join(STATIC, "admin.html"), headers={"Cache-Control": "no-store"})
 
 
+VERSION = "1.4"
+
+
 def msg(cfg, key, **kw):
     """Messaggio d'errore nella lingua scelta."""
     return i18n.t("server." + key, i18n.lang_of(cfg), **kw)
@@ -69,6 +73,8 @@ def get_config():
         "state": store.load_state(),
         "has_riposo": bool(cfg.get("riposo_images")),
         "demo": D.DEMO,
+        "menu_ai": menu_import.ai_available(),
+        "version": VERSION,
     }
 
 
@@ -105,12 +111,7 @@ async def put_section(section: str, request: Request):
         if body.get("lang") not in i18n.available():
             body["lang"] = i18n.DEFAULT
     if section == "mensa":
-        weeks = []
-        for wk in body.get("weeks") or [[]]:
-            wk = (list(wk) + [[]] * 5)[:5]
-            weeks.append([[x.strip() for x in day if x and x.strip()] for day in wk])
-        body = {"enabled": bool(body.get("enabled")), "title": (body.get("title") or "").strip(),
-                "week1": body.get("week1") or "", "weeks": weeks or [[[], [], [], [], []]]}
+        body = norm_mensa(body)
     cfg[section] = body
     store.save(cfg)
     return {"ok": True}
@@ -164,6 +165,68 @@ async def api_riposo(file: UploadFile = File(...), mode: str = Form("cover")):
     cfg["settings"]["riposo_active"] = i  # l'ultima caricata diventa quella mostrata
     store.save(cfg)
     return {"ok": True, "id": i}
+
+
+# ---------------------------------------------------------------- mensa: importazione e archivio
+
+def norm_mensa(body):
+    weeks = []
+    for wk in (body or {}).get("weeks") or [[]]:
+        wk = (list(wk) + [[]] * 5)[:5]
+        weeks.append([[str(x).strip() for x in (day or []) if x and str(x).strip()] for day in wk])
+    return {"enabled": bool((body or {}).get("enabled")), "title": ((body or {}).get("title") or "").strip()[:60],
+            "week1": (body or {}).get("week1") or "", "weeks": weeks or [[[], [], [], [], []]]}
+
+
+@app.post("/api/mensa/import")
+async def api_mensa_import(file: UploadFile = File(...), grade: str = Form("primaria")):
+    """Legge un menù da PDF o immagine e lo restituisce, senza salvarlo: la web app compila i campi."""
+    cfg = store.load()
+    raw = await file.read()
+    if len(raw) > 25 * 1024 * 1024:
+        raise HTTPException(400, msg(cfg, "menu_too_big"))
+    try:
+        return menu_import.read_menu(raw, file.filename or "", grade)
+    except menu_import.MenuError as ex:
+        raise HTTPException(400, msg(cfg, ex.key, **ex.kw))
+
+
+@app.post("/api/mensa/archive")
+async def api_mensa_archive(request: Request):
+    """Archivia un menù con un nome (di default quello attuale salvato)."""
+    body = await request.json()
+    cfg = store.load()
+    name = (body.get("name") or "").strip()[:40]
+    if not name:
+        raise HTTPException(400, msg(cfg, "menu_archive_name"))
+    menu = norm_mensa(body.get("mensa") or cfg["mensa"])
+    if not any(d for wk in menu["weeks"] for day in wk for d in day):
+        raise HTTPException(400, msg(cfg, "menu_archive_empty"))
+    entry = {"id": store.new_id(), "name": name, "saved": D.now(cfg).strftime("%d/%m/%Y"),
+             "mensa": {"title": menu["title"], "week1": menu["week1"], "weeks": menu["weeks"]}}
+    cfg["mensa_archive"] = [x for x in cfg.get("mensa_archive", []) if x["name"].lower() != name.lower()] + [entry]
+    store.save(cfg)
+    return {"ok": True, "archive": cfg["mensa_archive"]}
+
+
+@app.post("/api/mensa/archive/{arch_id}/restore")
+def api_mensa_restore(arch_id: str):
+    """Rimette in uso un menù archiviato. La settimana in corso va riscelta: la rotazione riparte."""
+    cfg = store.load()
+    entry = next((x for x in cfg.get("mensa_archive", []) if x["id"] == arch_id), None)
+    if not entry:
+        raise HTTPException(404, msg(cfg, "menu_archive_missing"))
+    cfg["mensa"] = norm_mensa({**entry["mensa"], "enabled": cfg["mensa"].get("enabled"), "week1": ""})
+    store.save(cfg)
+    return {"ok": True, "mensa": cfg["mensa"]}
+
+
+@app.delete("/api/mensa/archive/{arch_id}")
+def api_mensa_archive_delete(arch_id: str):
+    cfg = store.load()
+    cfg["mensa_archive"] = [x for x in cfg.get("mensa_archive", []) if x["id"] != arch_id]
+    store.save(cfg)
+    return {"ok": True, "archive": cfg["mensa_archive"]}
 
 
 @app.post("/api/riposo/{img_id}/attiva")
@@ -354,4 +417,4 @@ def device_nav(index: int, request: Request, battery_mv: int = 0):
 
 @app.get("/health")
 def health():
-    return JSONResponse({"ok": True, "time": datetime.now().isoformat(timespec="seconds")})
+    return JSONResponse({"ok": True, "version": VERSION, "time": datetime.now().isoformat(timespec="seconds")})

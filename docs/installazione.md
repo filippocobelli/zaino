@@ -62,10 +62,26 @@ Nella web app, in quest'ordine:
 3. **Orario**: entrata, uscita e materia di ogni ora; gli extra fissi di ogni giorno (la tuta, il flauto).
 4. **Diario**: compiti, verifiche, avvisi, gite e vacanze. Nei giorni di vacanza lo zaino non viene mostrato.
 5. **Mensa**: dai un nome al menù, scegli quale settimana della rotazione è quella in corso e inserisci i piatti (uno per riga). Il pranzo compare nella pagina di oggi e nella pagina Mensa.
+   - **Importa da un file**: carica il PDF che manda la scuola e i campi si compilano da soli; controlla i piatti e premi *Salva menù*. Se il menù distingue i gradi (*Infanzia: … Primaria: …*), scegli quale tenere.
+   - **Foto e screenshot** si leggono solo con una chiave API di Anthropic (vedi sotto, *Leggere i menù dalle foto*). I PDF con il testo funzionano sempre, senza servizi esterni.
+   - **Archivio menù**: prima di caricare il menù invernale, archivia quello estivo con un nome (es. «estate»); a primavera lo rimetti con *Ripristina*. Dopo il ripristino scegli di nuovo la settimana in corso.
 6. **Calendari**: link iCal pubblici (`webcal://…` o `https://…/*.ics`). Da iPhone: *Calendario → Calendari → (i) → Calendario pubblico → Condividi link*.
 7. **Immagini**: foto per la notte, convertite a 4 colori.
 
 La scheda **Schermo** mostra l'anteprima esatta di ogni pagina.
+
+### Leggere i menù dalle foto (facoltativo)
+
+Per importare foto, screenshot o PDF scansionati, il server usa Claude tramite l'API di Anthropic. Serve una chiave (`sk-ant-…`, da console.anthropic.com), da aggiungere alle variabili d'ambiente del container:
+
+```yaml
+    environment:
+      - ZAINO_AI_KEY=sk-ant-...
+      # facoltativo, il modello da usare (predefinito claude-sonnet-5-5)
+      # - ZAINO_AI_MODEL=claude-sonnet-5-5
+```
+
+Il file del menù viene inviato ad Anthropic; un menù non contiene dati personali. Ogni lettura costa pochi centesimi. Senza chiave tutto il resto funziona, e i PDF della scuola si importano lo stesso.
 
 ## 3. Il firmware
 
