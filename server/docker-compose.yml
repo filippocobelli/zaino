@@ -10,7 +10,10 @@ services:
       # lingua di una nuova installazione (it, en…); poi si cambia dalla web app
       # - ZAINO_LANG=en
       # leggere i menù della mensa da foto e screenshot (facoltativo, vedi docs/installazione.md)
+      # la chiave API si incolla in Impostazioni; in alternativa:
       # - ZAINO_AI_KEY=sk-ant-...
+      # frase segreta che cifra la chiave salvata (facoltativa)
+      # - ZAINO_SECRET=una-frase-lunga-a-caso
     volumes:
       - ./data:/data
     # Docker su Proxmox: se il log mostra "PermissionError ... socketpair", togli il commento:

@@ -41,7 +41,7 @@ h3{font:700 21px/1.1 var(--cond);margin:0 0 8px}
 .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .grow{flex:1 1 160px;min-width:0}
 label{display:block;font:600 16px var(--cond);color:var(--muted);margin:8px 0 3px}
-input[type=text],input[type=url],input[type=date],input[type=time],input[type=number],select,textarea{
+input[type=text],input[type=password],input[type=url],input[type=date],input[type=time],input[type=number],select,textarea{
   width:100%;font:inherit;padding:8px 10px;border:1.5px solid #9A9CA3;border-radius:4px;background:#fff;color:var(--ink)}
 textarea{min-height:64px;resize:vertical}
 input[type=color]{width:44px;height:40px;padding:2px;border:1.5px solid #9A9CA3;border-radius:4px;background:#fff}
@@ -213,6 +213,13 @@ button.x{border:0;background:none;color:var(--red);font:700 22px var(--cond);cur
     <h3 data-i="impostazioni.color_title"></h3>
     <p class="meta" data-i="impostazioni.color_intro"></p>
     <div class="themes" id="themeList" role="group" data-ia="impostazioni.color_title"></div>
+  </div>
+  <div class="sheet">
+    <h3 data-i="impostazioni.ai_title"></h3>
+    <p class="meta" data-i="impostazioni.ai_intro"></p>
+    <label for="sAiKey" data-i="impostazioni.ai_key"></label><input type="password" id="sAiKey" autocomplete="off" spellcheck="false" data-ip="impostazioni.ai_key_ph">
+    <p class="meta" id="sAiInfo" role="status" aria-live="polite"></p>
+    <div class="bar"><button class="act alt" id="sAiDel" onclick="delAiKey()" data-i="impostazioni.ai_remove"></button><button class="act" onclick="saveAiKey()" data-i="impostazioni.ai_save"></button></div>
   </div>
   <div class="sheet">
     <h3 data-i="impostazioni.wake_title"></h3>
@@ -560,7 +567,7 @@ function drawSched(){
 function addSlot(){sched.push({from:"",to:"",page:"home",when:"scuola"});drawSched()}
 function drawSettings(){
   const s=C.settings;
-  accentEdit=s.accent||"rosso";drawThemes();drawLang();
+  accentEdit=s.accent||"rosso";drawThemes();drawLang();drawAiKey().catch(()=>{});
   sched=(s.schedule||[]).map(x=>({...x}));drawSched();
   $("sDef").innerHTML=pageOpts(s.schedule_default||"home");$("sSE").checked=s.settimana_events!==false;
   pagesEdit=(s.pages||[]).filter(p=>SCREEN_PAGES.includes(p.id)).map(p=>({id:p.id,on:p.on!==false}));
@@ -571,6 +578,21 @@ function drawSettings(){
   $("sLat").value=s.lat;$("sLon").value=s.lon;$("sWake").value=(s.wake_times||[]).join(", ");
   $("sNight1").value=s.night_start||"";$("sNight2").value=s.night_end||"";
   $("sRN").checked=!!s.riposo_night;$("sRS").checked=!!s.riposo_no_school;
+}
+async function drawAiKey(info){
+  info=info||await api("/api/ai-key");
+  $("sAiInfo").textContent=info.set?t(info.source==="saved"?"impostazioni.ai_status_saved":"impostazioni.ai_status_env",{end:"…"+info.end}):t("impostazioni.ai_status_none");
+  $("sAiDel").hidden=info.source!=="saved";
+  C.menu_ai=info.set;$("mAiNote").textContent=t(C.menu_ai?"mensa.import_ai_note":"mensa.import_ai_off");
+}
+async function saveAiKey(){
+  const key=$("sAiKey").value.trim();if(!key){$("sAiKey").focus();toast(t("impostazioni.ai_needed"));return}
+  const r=await api("/api/ai-key","PUT",{key});
+  $("sAiKey").value="";await drawAiKey(r);toast(t(r.checked?"impostazioni.ai_saved":"impostazioni.ai_saved_unchecked"));
+}
+async function delAiKey(){
+  if(!confirm(t("impostazioni.ai_confirm_remove")))return;
+  await drawAiKey(await api("/api/ai-key","DELETE"));toast(t("impostazioni.ai_removed"));
 }
 async function saveSettings(){
   const wake=$("sWake").value.split(",").map(s=>s.trim()).filter(s=>/^\d{1,2}:\d{2}$/.test(s)).map(s=>s.padStart(5,"0")).sort();
